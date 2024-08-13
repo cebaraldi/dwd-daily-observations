@@ -30,6 +30,7 @@ components:
     properties: {text: Google Maps}
     type: Link
     layout_properties: {grid_position: 'EVXJWX,TCIOAF'}
+    event_bindings: {click: google_maps_link_click}
   - name: about_link
     properties: {text: About}
     type: Link

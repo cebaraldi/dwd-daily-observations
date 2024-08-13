@@ -7,10 +7,15 @@ components_by_slot:
     type: GridPanel
     layout_properties: {}
     components:
-    - name: label_1
-      properties: {text: Select a region}
-      type: Label
+    - name: button_1
+      properties: {text: Load Regions, role: tonal-button}
+      type: Button
       layout_properties: {row: GXJNNG, width_xs: 3, col_xs: 0}
+      event_bindings: {click: button_1_click}
+    - name: region_label
+      properties: {text: '... and select one', visible: false}
+      type: Label
+      layout_properties: {row: GXJNNG, width_xs: 3, col_xs: 3}
     - name: ws_label
       properties: {text: Select a station, visible: false}
       type: Label

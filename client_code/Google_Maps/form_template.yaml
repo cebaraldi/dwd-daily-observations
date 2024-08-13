@@ -1,0 +1,8 @@
+layout: {type: 'form:ceb_Layout'}
+is_package: true
+components_by_slot:
+  slot_1:
+  - name: map_of_germany
+    properties: {height: '680'}
+    type: GoogleMap
+    layout_properties: {}

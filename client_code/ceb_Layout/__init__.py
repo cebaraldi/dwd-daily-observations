@@ -16,3 +16,7 @@ class ceb_Layout(ceb_LayoutTemplate):
   def home_link_click(self, **event_args):
     """This method is called when the link is clicked"""
     open_form('Home')
+
+  def google_maps_link_click(self, **event_args):
+    """This method is called when the link is clicked"""
+    open_form('Google_Maps')
