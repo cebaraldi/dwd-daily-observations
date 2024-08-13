@@ -1,0 +1,46 @@
+is_package: true
+container:
+  type: HtmlTemplate
+  properties: {html: '@theme:standard-page.html'}
+components:
+- type: ColumnPanel
+  properties: {col_widths: '{}'}
+  name: content_panel
+  layout_properties: {slot: default}
+  components:
+  - name: label_3
+    properties: {text: 'Select a region:', align: left}
+    type: Label
+    layout_properties: {grid_position: 'ROZWCG,XDDYUI'}
+  - name: label_4
+    properties: {text: Select a station}
+    type: Label
+    layout_properties: {grid_position: 'ROZWCG,HBALHT'}
+  - name: grid_panel_1
+    properties: {}
+    type: GridPanel
+    layout_properties: {grid_position: 'DRJLTU,JSRMTE'}
+    components:
+    - name: regionDropdown
+      properties: {placeholder: ''}
+      type: DropDown
+      layout_properties: {row: YHVCGH, width_xs: 10, col_xs: 0}
+      event_bindings: {change: regionDropdown_change}
+  - name: wsDropdown
+    properties: {visible: false, placeholder: ''}
+    type: DropDown
+    layout_properties: {grid_position: 'DRJLTU,UMYDBN'}
+    event_bindings: {change: wsDropdown_change}
+- type: FlowPanel
+  properties: {}
+  name: navbar_links
+  layout_properties: {slot: nav-right}
+  components:
+  - name: label_2
+    properties: {text: ceb 2024}
+    type: Label
+    layout_properties: {}
+- name: label_1
+  properties: {text: DWD Weather App}
+  type: Label
+  layout_properties: {slot: title}

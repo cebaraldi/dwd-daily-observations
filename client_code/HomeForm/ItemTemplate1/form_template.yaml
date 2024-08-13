@@ -1,0 +1,38 @@
+is_package: true
+container:
+  type: ColumnPanel
+  properties: {col_widths: '{"CKMLLX":8,"TKIABO":8,"ZRNQRH":8,"PPPEJI":8,"EGYYUS":7,"FVOVWV":7,"YNPARH":3,"DGQDHD":11}'}
+components:
+- name: tb_wsid
+  properties: {}
+  type: TextBox
+  layout_properties: {grid_position: 'GRZDOF,CKMLLX'}
+  data_bindings: []
+- name: tb_date_from
+  properties: {}
+  type: TextBox
+  layout_properties: {grid_position: 'GRZDOF,TKIABO'}
+- name: tb_date_to
+  properties: {}
+  type: TextBox
+  layout_properties: {grid_position: 'GRZDOF,ZRNQRH'}
+- name: tb_height
+  properties: {}
+  type: TextBox
+  layout_properties: {grid_position: 'GRZDOF,PPPEJI'}
+- name: tb_lat
+  properties: {}
+  type: TextBox
+  layout_properties: {grid_position: 'GRZDOF,EGYYUS'}
+- name: tb_lon
+  properties: {}
+  type: TextBox
+  layout_properties: {grid_position: 'GRZDOF,FVOVWV'}
+- name: cb_select
+  properties: {text: '', foreground: 'theme:Primary'}
+  type: CheckBox
+  layout_properties: {grid_position: 'GRZDOF,YNPARH'}
+- name: bt_delete
+  properties: {text: '', icon: 'fa:trash', align: left, foreground: red}
+  type: Button
+  layout_properties: {grid_position: 'GRZDOF,DGQDHD'}
