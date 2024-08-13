@@ -19,6 +19,7 @@ components_by_slot:
       properties: {}
       type: DropDown
       layout_properties: {row: IJBWDL, width_xs: 6, col_xs: 0}
+      event_bindings: {change: regionDropdown_change}
     - name: wsDropdown
       properties: {visible: false}
       type: DropDown

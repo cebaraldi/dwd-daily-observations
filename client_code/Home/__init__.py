@@ -14,9 +14,15 @@ class Home(HomeTemplate):
     regions = anvil.server.call('get_region')#, callback=self.populate_dropdown)
     self.regionDropdown.items = regions
 
-  def wsDropdown_change(self, **event_args):
+  def regionDropdown_change(self, **event_args):
     """This method is called when an item is selected"""
     self.wsDropdown.visible = True
     self.ws_label.visible = True
     ws = anvil.server.call('get_ws', self.regionDropdown.selected_value)
     self.wsDropdown.items = ws
+
+  def wsDropdown_change(self, **event_args):
+    """This method is called when an item is selected"""
+    ws = anvil.server.call('dlObservations', 
+                           self.regionDropdown.selected_value,
+                           self.wsDropdown.selected_value)

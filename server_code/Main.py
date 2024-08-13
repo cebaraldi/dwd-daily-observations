@@ -37,6 +37,7 @@ def get_region():
   rows =  app_tables.dwd_weatherstations.search()
   unique_values = set(row['region'] for row in rows)
   sorted_values = sorted(list(unique_values))
+  sorted_values.insert(0,"<Please select a region>")
   return sorted_values  
 
 @anvil.server.callable
@@ -44,6 +45,7 @@ def get_ws(region):
   rows = app_tables.dwd_weatherstations.search(region=q.ilike(region))
   unique_values = set(row['name'] for row in rows)
   sorted_values = sorted(list(unique_values))
+  sorted_values.insert(0,"<Please select a station>")
   return sorted_values
 
 @anvil.server.callable
