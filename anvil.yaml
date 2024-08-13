@@ -53,18 +53,20 @@ db_schema:
       admin_ui: {width: 200, order: 7}
       type: string
     title: DWD_WeatherStations
-startup: {type: form, module: HomeForm}
-name: Clone of DWD Observations - Prod
+startup: {type: form, module: Home}
+name: DWD Observations
 startup_form: null
 correct_dependency_ids: {}
 renamed: true
 runtime_options:
-  version: 2
+  version: 3
   client_version: '3'
   server_version: python3-sandbox
   server_spec: {base: python310-standard}
+  legacy_features: {class_names: true, bootstrap3: true, __dict__: true, root_container: true}
 dependencies: []
 services:
 - source: /runtime/services/tables.yml
   client_config: {}
   server_config: {}
+native_deps: null

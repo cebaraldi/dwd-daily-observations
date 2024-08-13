@@ -1,0 +1,26 @@
+layout: {type: 'form:ceb_Layout'}
+is_package: true
+components_by_slot:
+  slot_1:
+  - name: grid_panel_1
+    properties: {}
+    type: GridPanel
+    layout_properties: {}
+    components:
+    - name: label_1
+      properties: {text: Select a region}
+      type: Label
+      layout_properties: {row: GXJNNG, width_xs: 3, col_xs: 0}
+    - name: ws_label
+      properties: {text: Select a station, visible: false}
+      type: Label
+      layout_properties: {row: GXJNNG, width_xs: 3, col_xs: 6}
+    - name: regionDropdown
+      properties: {}
+      type: DropDown
+      layout_properties: {row: IJBWDL, width_xs: 6, col_xs: 0}
+    - name: wsDropdown
+      properties: {visible: false}
+      type: DropDown
+      layout_properties: {row: IJBWDL, width_xs: 6, col_xs: 6}
+      event_bindings: {change: wsDropdown_change}
