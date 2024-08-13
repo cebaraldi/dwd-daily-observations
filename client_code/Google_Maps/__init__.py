@@ -16,17 +16,20 @@ class Google_Maps(Google_MapsTemplate):
     zoom = 6.2
     self.map_of_germany.center = GoogleMap.LatLng(lat, lon)
     self.map_of_germany.zoom = zoom
-  
+
+    #app_tables.meteoch_weatherstations
+    ws = anvil.server.call('get_read_ws')
+    
 #  def button_1_click(self, **event_args):
 #    """This method is called when the button is clicked"""
 #    open_form('Form2')
 
-det position_markers():
+#set position_markers():
 
-  marker = GoogleMap.Marker(
-    animation=GoogleMap.Animation.DROP,
-    position=GoogleMap.LatLng(lat, lon)  
-  ) 
+#  marker = GoogleMap.Marker(
+#    animation=GoogleMap.Animation.DROP,
+#    position=GoogleMap.LatLng(lat, lon)  
+#  ) 
   
 def position_marker(self, lat, lon):
   marker = GoogleMap.Marker(
