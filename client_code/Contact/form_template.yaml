@@ -3,6 +3,6 @@ is_package: true
 components_by_slot:
   slot_1:
   - name: label_1
-    properties: {text: About}
+    properties: {text: Contact}
     type: Label
     layout_properties: {}

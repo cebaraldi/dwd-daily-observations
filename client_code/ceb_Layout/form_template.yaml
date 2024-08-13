@@ -35,10 +35,12 @@ components:
     properties: {text: About}
     type: Link
     layout_properties: {grid_position: 'BBSXCT,BNTXMZ'}
+    event_bindings: {click: about_link_click}
   - name: contact_link
     properties: {text: Contact}
     type: Link
     layout_properties: {grid_position: 'DCNUTI,LSTAQF'}
+    event_bindings: {click: contact_link_click}
 - name: label_1
   properties: {text: DWD Observations}
   type: Label
