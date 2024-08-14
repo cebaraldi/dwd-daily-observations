@@ -17,9 +17,21 @@ class Google_Maps(Google_MapsTemplate):
     self.map_of_germany.center = GoogleMap.LatLng(lat, lon)
     self.map_of_germany.zoom = zoom
 
-    #app_tables.meteoch_weatherstations
-    ws = anvil.server.call('get_read_ws')
-    
+    # Call the server function
+    data = anvil.server.call('get_table_as_list_of_dicts')#, 'dwd_weatherstations')
+    # Or
+    #data = anvil.server.call('get_table_as_column_dict')#, 'dwd_weatherstations')    
+
+    print(data)
+
+
+
+
+
+
+
+
+
 #  def button_1_click(self, **event_args):
 #    """This method is called when the button is clicked"""
 #    open_form('Form2')
