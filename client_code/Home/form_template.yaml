@@ -21,7 +21,7 @@ components_by_slot:
       type: Label
       layout_properties: {row: GXJNNG, width_xs: 3, col_xs: 6}
     - name: regionDropdown
-      properties: {}
+      properties: {visible: false}
       type: DropDown
       layout_properties: {row: IJBWDL, width_xs: 6, col_xs: 0}
       event_bindings: {change: regionDropdown_change}

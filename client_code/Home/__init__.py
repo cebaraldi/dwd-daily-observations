@@ -28,6 +28,7 @@ class Home(HomeTemplate):
 
   def button_1_click(self, **event_args):
     """This method is called when the button is clicked"""
+    self.regionDropdown.visible = True
     regions = anvil.server.call('get_region')#, callback=self.populate_dropdown)
     self.regionDropdown.items = regions
     self.region_label.visible = True
