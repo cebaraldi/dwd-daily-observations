@@ -48,6 +48,11 @@ def get_table_as_column_dict():
   return column_dict
 
 @anvil.server.callable
+def get_table_data(table_name):
+  #table = tables.get_table(table_name)
+  return app_tables.dwd_weatherstations.search()
+
+@anvil.server.callable
 def read_ws():
   for row in app_tables.dwd_weatherstations.search():
     print(row["name"])

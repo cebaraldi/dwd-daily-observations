@@ -18,11 +18,13 @@ class Google_Maps(Google_MapsTemplate):
     self.map_of_germany.zoom = zoom
 
     # Call the server function
-    data = anvil.server.call('get_table_as_list_of_dicts')#, 'dwd_weatherstations')
+    #data = anvil.server.call('get_table_as_list_of_dicts')#, 'dwd_weatherstations')
     # Or
     #data = anvil.server.call('get_table_as_column_dict')#, 'dwd_weatherstations')    
-
+    table_proxy = anvil.server.call('get_table_data')#, 'dwd_weatherstations')  # Assuming a function to get the table proxy
+    data = anvil.server.call(table_proxy.search)
     print(data)
+    
 
 
 
