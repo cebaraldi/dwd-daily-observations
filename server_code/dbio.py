@@ -48,7 +48,7 @@ def get_table_as_column_dict():
   return column_dict
 
 @anvil.server.callable
-def get_table_data(table_name):
+def get_table_data():
   #table = tables.get_table(table_name)
   return app_tables.dwd_weatherstations.search()
 

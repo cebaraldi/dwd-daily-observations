@@ -22,8 +22,8 @@ class Google_Maps(Google_MapsTemplate):
     # Or
     #data = anvil.server.call('get_table_as_column_dict')#, 'dwd_weatherstations')    
     table_proxy = anvil.server.call('get_table_data')#, 'dwd_weatherstations')  # Assuming a function to get the table proxy
-    data = anvil.server.call(table_proxy.search)
-    print(data)
+    #data = anvil.server.call(table_proxy.search)
+    print(type(table_proxy))
     
 
 
