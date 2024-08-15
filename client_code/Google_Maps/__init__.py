@@ -18,21 +18,11 @@ class Google_Maps(Google_MapsTemplate):
     self.map_of_germany.zoom = zoom
 
     # Call the server function
-    #data = anvil.server.call('get_table_as_list_of_dicts')#, 'dwd_weatherstations')
-    # Or
-    #data = anvil.server.call('get_table_as_column_dict')#, 'dwd_weatherstations')    
-    table_proxy = anvil.server.call('get_table_data')#, 'dwd_weatherstations')  # Assuming a function to get the table proxy
-    #data = anvil.server.call(table_proxy.search)
-    print(type(table_proxy))
-    
-
-
-
-
-
-
-
-
+    data = anvil.server.call('get_table_data')
+    sorted_values = sorted(list(set(data['region'])))
+    sorted_values.insert(0,"<All regions>")
+    self.drop_down_region.items = sorted_values
+    print(self.drop_down_region.selected_value)
 
 #  def button_1_click(self, **event_args):
 #    """This method is called when the button is clicked"""

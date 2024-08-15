@@ -25,37 +25,20 @@ def convert_to_date(string_date):
   except ValueError:
     return None  # Or handle the error differently
 
-#@anvil.server.callable
-#def get_table_as_list_of_dicts():
-#  """
-#  Returns all rows from a specified app table as a list of dictionaries.
-#  """
-#  rows = app_tables.dwd_weatherstations.search()
-#  return [row for row in rows]
-
-#@anvil.server.callable
-#def get_table_as_column_dict():
-#  """
-#  Returns a dictionary where keys are column names and values are lists of corresponding data.
-#  """
-#  #table = tables.get_table(table_name)
-#  #rows = table.search()
-#  rows = app_tables.dwd_weatherstations.search()
-#  column_dict = {}
-#  for row in rows:
-#    for column, value in row.items():
-#      column_dict.setdefault(column, []).append(value)
-#  return column_dict
-
-
-
 @anvil.server.callable
 def get_table_data():
-  rows = app_tables.meteoch_weatherstations.search()
-  values = row['climateregion'] for row in rows
-  #return(sorted_values)
-
-
+  data = app_tables.dwd_weatherstations.search()
+  data_list = [{
+    'height': row['height'], 
+    'lat': row['lat'],
+    'lon': row['lon'],
+    'name': row['name'],
+    'region': row['region']
+  } for row in data]
+  df = pd.DataFrame(data_list)
+  #print(df.head())
+  dict_list = df.to_dict('list')
+  return(dict_list)
 
 @anvil.server.callable
 def read_ws():

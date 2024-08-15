@@ -2,7 +2,18 @@ layout: {type: 'form:ceb_Layout'}
 is_package: true
 components_by_slot:
   slot_1:
+  - name: drop_down_region
+    properties:
+      include_placeholder: true
+      placeholder: Select a region
+      items: ['[''a'', ''b'']']
+    type: DropDown
+    layout_properties: {}
   - name: map_of_germany
     properties: {height: '680'}
     type: GoogleMap
+    layout_properties: {}
+  - name: grid_panel_1
+    properties: {}
+    type: GridPanel
     layout_properties: {}
