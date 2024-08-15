@@ -51,10 +51,9 @@ def convert_to_date(string_date):
 
 @anvil.server.callable
 def get_table_data():
-  #table = tables.get_table(table_name)
-  return app_tables.dwd_weatherstations.search()
-
-
+  rows = app_tables.meteoch_weatherstations.search()
+  values = row['climateregion'] for row in rows
+  #return(sorted_values)
 
 
 
