@@ -9,6 +9,7 @@ components_by_slot:
       items: ['[''a'', ''b'']']
     type: DropDown
     layout_properties: {}
+    event_bindings: {change: drop_down_region_change}
   - name: map_of_germany
     properties: {height: '680'}
     type: GoogleMap

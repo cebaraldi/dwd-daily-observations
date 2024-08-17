@@ -22,7 +22,7 @@ class Google_Maps(Google_MapsTemplate):
     sorted_values = sorted(list(set(data['region'])))
     sorted_values.insert(0,"<All regions>")
     self.drop_down_region.items = sorted_values
-    print(self.drop_down_region.selected_value)
+    #print(self.drop_down_region.selected_value)
 
 #  def button_1_click(self, **event_args):
 #    """This method is called when the button is clicked"""
@@ -34,6 +34,12 @@ class Google_Maps(Google_MapsTemplate):
 #    animation=GoogleMap.Animation.DROP,
 #    position=GoogleMap.LatLng(lat, lon)  
 #  ) 
+
+  def drop_down_region_change(self, **event_args):
+    """This method is called when an item is selected"""
+    region =self.drop_down_region.selected_value
+    print(region) ##############
+    
   
 def position_marker(self, lat, lon):
   marker = GoogleMap.Marker(
