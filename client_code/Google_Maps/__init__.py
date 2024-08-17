@@ -5,7 +5,8 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-data = {}
+global_data = {}
+
 class Google_Maps(Google_MapsTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
@@ -19,11 +20,11 @@ class Google_Maps(Google_MapsTemplate):
     self.map_of_germany.zoom = zoom
 
     # Call the server function
-    data = anvil.server.call('get_table_data')
-    sorted_values = sorted(list(set(data['region'])))
+    global_data['data'] = anvil.server.call('get_table_data')
+    #print(global_data['data']['region'])    
+    sorted_values = sorted(list(set(global_data['data']['region'])))
     sorted_values.insert(0,"<All regions>")
     self.drop_down_region.items = sorted_values
-    print(type(data))
 
 #  def button_1_click(self, **event_args):
 #    """This method is called when the button is clicked"""
@@ -40,8 +41,7 @@ class Google_Maps(Google_MapsTemplate):
     """This method is called when an item is selected"""
     region =self.drop_down_region.selected_value
     print(region) ##############
-    print(data)
-    
+    print(global_data['data'])
   
 def position_marker(self, lat, lon):
   marker = GoogleMap.Marker(
