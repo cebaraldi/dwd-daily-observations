@@ -4,6 +4,7 @@ import anvil.server
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from .. import Globals
 
 class Google_Maps(Google_MapsTemplate):
   def __init__(self, **properties):
@@ -11,6 +12,14 @@ class Google_Maps(Google_MapsTemplate):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+    print(Globals.regions_loaded)
+    if not Globals.regions_loaded:
+      print(Globals.bar)
+      print("loading the regions...")
+      #Globals.regions = anvil.server.call('get_table_data')
+    else:
+      print("regions already loaded.")
+    
     lat = 51.3
     lon = 9.4
     zoom = 6.2

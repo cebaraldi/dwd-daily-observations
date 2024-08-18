@@ -7,6 +7,8 @@ from anvil.tables import app_tables
 #
 #    from . import Globals
 #
-region_loaded = False
+regions_loaded = False
+observations_loaded = False
 bar = 42
-foobar = {}
+regions = {}
+observations = {}
