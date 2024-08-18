@@ -5,7 +5,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-global_data = {}
+#global_data = {}
 
 class Google_Maps(Google_MapsTemplate):
   def __init__(self, **properties):
