@@ -11,14 +11,15 @@ class Google_Maps(Google_MapsTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    # Any code you write here will run before the form opens.
-    print(Globals.regions_loaded)
-    if not Globals.regions_loaded:
-      print(Globals.bar)
-      print("loading the regions...")
-      #Globals.regions = anvil.server.call('get_table_data')
-    else:
-      print("regions already loaded.")
+    # Fill dropdown component for region selection
+    if not Globals.ws_loaded:
+      url = url = Globals.url + Globals.recent_path + Globals.filename
+      Globals.weather_stations = anvil.server.call('dl_to_weather_stations', url)# Main
+      Globals.ws_loaded = True
+    Globals.regions = sorted(list(set(Globals.weather_stations['region'])))
+    regions = Globals.regions
+    regions.insert(0,'<Please select a region>')
+    self.drop_down_region.items = regions
     
     lat = 51.3
     lon = 9.4
@@ -27,11 +28,11 @@ class Google_Maps(Google_MapsTemplate):
     self.map_of_germany.zoom = zoom
 
     # Call the server function
-    global_data['data'] = anvil.server.call('get_table_data')
+    #global_data['data'] = anvil.server.call('get_table_data')
     #print(global_data['data']['region'])    
-    sorted_values = sorted(list(set(global_data['data']['region'])))
-    sorted_values.insert(0,"<All regions>")
-    self.drop_down_region.items = sorted_values
+    #sorted_values = sorted(list(set(global_data['data']['region'])))
+    #sorted_values.insert(0,"<All regions>")
+    #self.drop_down_region.items = sorted_values
 
 #  def button_1_click(self, **event_args):
 #    """This method is called when the button is clicked"""
@@ -48,7 +49,7 @@ class Google_Maps(Google_MapsTemplate):
     """This method is called when an item is selected"""
     region =self.drop_down_region.selected_value
     print(region) ##############
-    print(global_data['data'])
+    #print(global_data['data'])
   
 def position_marker(self, lat, lon):
   marker = GoogleMap.Marker(

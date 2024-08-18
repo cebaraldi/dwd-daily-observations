@@ -6,11 +6,6 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from .. import Globals
 
-#import Timer
-#>>> numbers = [7, 6, 1, 4, 1, 8, 0, 6]
-#>>> with Timer(text="{:.8f}"):
-#...     set(numbers)
-
 class Home(HomeTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
@@ -27,18 +22,17 @@ class Home(HomeTemplate):
     self.regionDropdown.items = regions
     self.region_label.visible = True
 
+  
   def regionDropdown_change(self, **event_args):
     """Activate weather station selection, when region is selected"""
+    def get_values_by_condition(list_a, list_b, condition):
+      return [b for a, b in zip(list_a, list_b) if a == condition]
     self.wsDropdown.visible = True
     self.ws_label.visible = True
-
-    print(Globals.weather_stations['name'])
-    print(Globals.weather_stations['region'])
-    print(type(Globals.weather_stations))
-    print(Globals.weather_stations.keys())
-    ws = anvil.server.call('get_ws', self.regionDropdown.selected_value)
-
-    
+    ws = get_values_by_condition(Globals.weather_stations['region'], 
+                                      Globals.weather_stations['name'], 
+                                      self.regionDropdown.selected_value)
+    ws.insert(0,'<Please select a region>')
     self.wsDropdown.items = ws
 
   def wsDropdown_change(self, **event_args):
