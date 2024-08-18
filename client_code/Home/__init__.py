@@ -16,7 +16,7 @@ class Home(HomeTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    # Any code you write here will run before the form opens.
+    # Fill dropdown component for region selection
     if not Globals.ws_loaded:
       url = url = Globals.url + Globals.recent_path + Globals.filename
       Globals.weather_stations = anvil.server.call('dl_to_weather_stations', url)# Main
@@ -26,16 +26,16 @@ class Home(HomeTemplate):
     regions.insert(0,'<Please select a region>')
     self.regionDropdown.items = regions
     self.region_label.visible = True
-    
+
   def regionDropdown_change(self, **event_args):
-    """This method is called when an item is selected"""
-    self.region_label.visible = False
+    """Activate weather station selection, when region is selected"""
     self.wsDropdown.visible = True
     self.ws_label.visible = True
 
-
     print(Globals.weather_stations['name'])
-    print(Globals.weather_stations['name'])
+    print(Globals.weather_stations['region'])
+    print(type(Globals.weather_stations))
+    print(Globals.weather_stations.keys())
     ws = anvil.server.call('get_ws', self.regionDropdown.selected_value)
 
     
