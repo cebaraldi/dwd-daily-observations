@@ -4,8 +4,7 @@ import anvil.server
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
-global_data = {}
+import Globals
 
 class Home(HomeTemplate):
   def __init__(self, **properties):
@@ -13,6 +12,8 @@ class Home(HomeTemplate):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+    if not Globals.region_loaded:
+      print("load the regions...")
 
   def regionDropdown_change(self, **event_args):
     """This method is called when an item is selected"""
