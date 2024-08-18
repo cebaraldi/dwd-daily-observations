@@ -10,10 +10,11 @@ from anvil.tables import app_tables
 url = 'https://opendata.dwd.de/'
 path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
 recent_path = path + 'recent/'
+historical_path = path + 'historical/'
 filename = 'KL_Tageswerte_Beschreibung_Stationen.txt'
+
 ws_loaded = False
 regions_loaded = False
 obs_loaded = False
-regions = {'a', 'b', 'c'}
 weather_stations = {}
 observations = {}

@@ -6,9 +6,11 @@ from datetime import datetime
 import os.path
 import requests
 from Tools import *
-#import tempfile
+import csv
+import io
 import zipfile
 from urllib.request import urlretrieve
+import pandas as pd
 
 @anvil.server.callable
 def extract_year_from_date(date_value):
@@ -79,23 +81,37 @@ def dlObservations(region, ws):
 #        return False
 
 @anvil.server.callable
-def dl_to_weather_stations():
-  url = "https://opendata.dwd.de/"
-  path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
-  recent_path = path + 'recent/'
-  #historical_path = path + 'historical/'
-  filename = 'KL_Tageswerte_Beschreibung_Stationen.txt' 
-  # TEXT Data
-  url = url + recent_path + filename
-#  if not os.path.exists(filename):
-#    save_as = filename
-#    # Download from URL
-#    response = requests.get(url, stream=True)
-#    # Save to file
-#    with open(save_as, mode="wb") as file:
-#      for chunk in response.iter_content(chunk_size=10 * 1024):
-#        file.write(chunk)
+def dl_to_weather_stations(url):
   response = requests.get(url)
-  print(response)
-  print(type(response))
-  return(response)
+  if response.status_code == 200:
+    lines = response.text.splitlines()
+    #format_string = "%Y%m%d"
+    wsid = []
+    date_from = []
+    date_to = []
+    height = []
+    lat = []
+    lon = []
+    city = []
+    region = []
+    for line in lines[2:]:
+      wsid.append(line[0:5])
+      date_from.append(line[6:14])
+      date_to.append(line[15:23])
+      height.append(line[24:42])
+      lat.append(line[43:52])
+      lon.append(line[53:60])
+      city.append(line[61:101].strip())
+      region.append(line[102:].strip())
+    # dictionary of lists 
+    dict = {'wsid': wsid, 'date_from': date_from, 'date_to': date_to, 'height': height, # [m]
+            'lat': lat, 'lon': lon, 'name': city, 'region': region} # [°]
+    df = pd.DataFrame(dict) #.drop(index=[0,1])
+    # Convert columns
+    df['date_from'] = pd.to_datetime(df['date_from']).dt.date
+    df['date_to'] = pd.to_datetime(df['date_to']).dt.date
+    df['height'] = pd.to_numeric(df['height'], downcast="integer")
+    df['lat'] = pd.to_numeric(df['lat'], downcast="float")
+    df['lon'] = pd.to_numeric(df['lon'], downcast="float")
+    #print(df.head())
+  return(df.to_dict('list'))

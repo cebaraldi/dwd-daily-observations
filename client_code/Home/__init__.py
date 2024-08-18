@@ -18,26 +18,27 @@ class Home(HomeTemplate):
 
     # Any code you write here will run before the form opens.
     if not Globals.ws_loaded:
-      print("downloading weather stations...")
-      #Globals.regions = anvil.server.call('get_table_data')
-      #regions = anvil.server.call('get_region')#, callback=self.populate_dropdown)
-      Globals.weather_stations = anvil.server.call('dl_to_weather_stations')
+      url = url = Globals.url + Globals.recent_path + Globals.filename
+      Globals.weather_stations = anvil.server.call('dl_to_weather_stations', url)# Main
       Globals.ws_loaded = True
-      print(type(Globals.weather_stations))
-      for key in Globals.weather_stations.keys():
-        print(key)
-      self.regionDropdown.items =Globals.regions      
-      Notification('downloaded',style='info',timeout=2).show()
-      self.region_label.visible = True
-    else:
-      print("regions already loaded.")
-
+    Globals.regions = sorted(list(set(Globals.weather_stations['region'])))
+    regions = Globals.regions
+    regions.insert(0,'<Please select a region>')
+    self.regionDropdown.items = regions
+    self.region_label.visible = True
+    
   def regionDropdown_change(self, **event_args):
     """This method is called when an item is selected"""
     self.region_label.visible = False
     self.wsDropdown.visible = True
     self.ws_label.visible = True
+
+
+    print(Globals.weather_stations['name'])
+    print(Globals.weather_stations['name'])
     ws = anvil.server.call('get_ws', self.regionDropdown.selected_value)
+
+    
     self.wsDropdown.items = ws
 
   def wsDropdown_change(self, **event_args):
