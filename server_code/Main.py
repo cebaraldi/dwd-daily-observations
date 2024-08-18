@@ -83,6 +83,7 @@ def dl_to_weather_stations():
   url = "https://opendata.dwd.de/"
   path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
   recent_path = path + 'recent/'
+  #historical_path = path + 'historical/'
   filename = 'KL_Tageswerte_Beschreibung_Stationen.txt' 
   # TEXT Data
   url = url + recent_path + filename
