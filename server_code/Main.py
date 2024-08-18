@@ -4,7 +4,7 @@ from anvil.tables import app_tables
 import anvil.server
 from datetime import datetime
 import os.path
-#import requests
+import requests
 from Tools import *
 #import tempfile
 import zipfile
@@ -77,3 +77,24 @@ def dlObservations(region, ws):
 #              print(file)
 #      except FileNotFoundError:
 #        return False
+
+@anvil.server.callable
+def dl_to_weather_stations():
+  url = "https://opendata.dwd.de/"
+  path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
+  recent_path = path + 'recent/'
+  filename = 'KL_Tageswerte_Beschreibung_Stationen.txt' 
+  # TEXT Data
+  url = url + recent_path + filename
+#  if not os.path.exists(filename):
+#    save_as = filename
+#    # Download from URL
+#    response = requests.get(url, stream=True)
+#    # Save to file
+#    with open(save_as, mode="wb") as file:
+#      for chunk in response.iter_content(chunk_size=10 * 1024):
+#        file.write(chunk)
+  response = requests.get(url)
+  print(response)
+  print(type(response))
+  return(response)

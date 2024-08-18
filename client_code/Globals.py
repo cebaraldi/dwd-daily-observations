@@ -7,8 +7,13 @@ from anvil.tables import app_tables
 #
 #    from . import Globals
 #
+url = 'https://opendata.dwd.de/'
+path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
+recent_path = path + 'recent/'
+filename = 'KL_Tageswerte_Beschreibung_Stationen.txt'
+ws_loaded = False
 regions_loaded = False
-observations_loaded = False
-bar = 42
-regions = {}
+obs_loaded = False
+regions = {'a', 'b', 'c'}
+weather_stations = {}
 observations = {}

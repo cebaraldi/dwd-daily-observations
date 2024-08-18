@@ -6,19 +6,28 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from .. import Globals
 
+#import Timer
+#>>> numbers = [7, 6, 1, 4, 1, 8, 0, 6]
+#>>> with Timer(text="{:.8f}"):
+#...     set(numbers)
+
 class Home(HomeTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
-    if not Globals.regions_loaded:
-      print(Globals.bar)
-      print("loading the regions...")
-      Globals.regions = anvil.server.call('get_table_data')
+    if not Globals.ws_loaded:
+      print("downloading weather stations...")
+      #Globals.regions = anvil.server.call('get_table_data')
       #regions = anvil.server.call('get_region')#, callback=self.populate_dropdown)
+      Globals.weather_stations = anvil.server.call('dl_to_weather_stations')
+      Globals.ws_loaded = True
+      print(type(Globals.weather_stations))
+      for key in Globals.weather_stations.keys():
+        print(key)
       self.regionDropdown.items =Globals.regions      
-      Notification('regions loaded').show()
+      Notification('downloaded',style='info',timeout=2).show()
       self.region_label.visible = True
     else:
       print("regions already loaded.")
