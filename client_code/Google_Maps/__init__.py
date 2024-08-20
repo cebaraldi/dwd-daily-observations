@@ -18,9 +18,12 @@ class Google_Maps(Google_MapsTemplate):
       Globals.ws_loaded = True
     Globals.regions = sorted(list(set(Globals.weather_stations['region'])))
     regions = Globals.regions
-    regions.insert(0,'<Please select a region>')
+    print(regions)
+    #regions.insert(0,'<Please select a region>')
     self.drop_down_region.items = regions
-    
+    self.drop_down_region.placeholder = '<Please select a region>'
+
+    # Center to map of germany
     lat = 51.3
     lon = 9.4
     zoom = 6.2
@@ -48,7 +51,8 @@ class Google_Maps(Google_MapsTemplate):
   def drop_down_region_change(self, **event_args):
     """This method is called when an item is selected"""
     region =self.drop_down_region.selected_value
-    print(region) ##############
+    if region is not None:
+      print(region) 
     #print(global_data['data'])
   
 def position_marker(self, lat, lon):

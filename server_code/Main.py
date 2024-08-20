@@ -51,7 +51,7 @@ def get_ws(region):
   return sorted_values
 
 @anvil.server.callable
-def dlObservations(region, ws):
+def dl_observations(region, ws):
   record = app_tables.dwd_weatherstations.search(
     name=q.ilike(ws), 
     region=q.ilike(region)
