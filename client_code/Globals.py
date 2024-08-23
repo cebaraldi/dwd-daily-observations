@@ -13,12 +13,16 @@ recent_path = path + 'recent/'
 historical_path = path + 'historical/'
 filename = 'KL_Tageswerte_Beschreibung_Stationen.txt'
 
-#regions_loaded = False
+regions = {}
+regions_loaded = False
 
-region = None
-weather_station = None
 weather_stations = {}
 weather_stations_loaded = False
 
 observations = {}
 observations_loaded = False
+
+region = None
+region_selected = False
+weather_station = None
+weather_station_selected = False

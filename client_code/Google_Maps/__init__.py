@@ -12,15 +12,8 @@ class Google_Maps(Google_MapsTemplate):
     self.init_components(**properties)
 
     # Fill dropdown component for region selection
-    if not Globals.ws_loaded:
-      url = url = Globals.url + Globals.recent_path + Globals.filename
-      Globals.weather_stations = anvil.server.call('dl_to_weather_stations', url)# Main
-      Globals.ws_loaded = True
     Globals.regions = sorted(list(set(Globals.weather_stations['region'])))
-    regions = Globals.regions
-    print(regions)
-    #regions.insert(0,'<Please select a region>')
-    self.drop_down_region.items = regions
+    self.drop_down_region.items = Globals.regions
     self.drop_down_region.placeholder = '<Please select a region>'
 
     # Center to map of germany
@@ -30,31 +23,41 @@ class Google_Maps(Google_MapsTemplate):
     self.map_of_germany.center = GoogleMap.LatLng(lat, lon)
     self.map_of_germany.zoom = zoom
 
-    # Call the server function
-    #global_data['data'] = anvil.server.call('get_table_data')
-    #print(global_data['data']['region'])    
-    #sorted_values = sorted(list(set(global_data['data']['region'])))
-    #sorted_values.insert(0,"<All regions>")
-    #self.drop_down_region.items = sorted_values
-
-#  def button_1_click(self, **event_args):
-#    """This method is called when the button is clicked"""
-#    open_form('Form2')
-
-#set position_markers():
-
-#  marker = GoogleMap.Marker(
-#    animation=GoogleMap.Animation.DROP,
-#    position=GoogleMap.LatLng(lat, lon)  
-#  ) 
-
   def drop_down_region_change(self, **event_args):
     """This method is called when an item is selected"""
-    region =self.drop_down_region.selected_value
-    if region is not None:
-      print(region) 
-    #print(global_data['data'])
-  
+    def get_values_by_condition(list_a, list_b, condition):
+      return [b for a, b in zip(list_a, list_b) if a == condition]
+    Globals.region =self.drop_down_region.selected_value
+    if Globals.region is not None:
+      name = get_values_by_condition(Globals.weather_stations['region'], 
+                                        Globals.weather_stations['name'], 
+                                        Globals.region)
+      lat = get_values_by_condition(Globals.weather_stations['region'], 
+                                  Globals.weather_stations['lat'], 
+                                  Globals.region)
+      lon = get_values_by_condition(Globals.weather_stations['region'], 
+                                  Globals.weather_stations['lon'], 
+                                  Globals.region)
+      height = get_values_by_condition(Globals.weather_stations['region'], 
+                                  Globals.weather_stations['height'], 
+                                  Globals.region)
+      green_icon = GoogleMap.Icon(
+            url="http://maps.google.com/mapfiles/kml/paddle/grn-blank.png"
+          )
+    
+      for n, lat, lon, h in zip(name, lat, lon, height):
+        #print(f'{n} {lat} {lon} {h}')
+        marker = GoogleMap.Marker(
+          animation=GoogleMap.Animation.DROP,
+          position=GoogleMap.LatLng(lat, lon),
+          icon = green_icon
+        )     
+        def marker_click(sender, **event_args):
+          i = GoogleMap.InfoWindow(content=Label(text=f'{n}\n{h}'))
+          i.open(map, sender)
+        marker.add_event_handler("click", marker_click)
+        self.map_of_germany.add_component(marker)
+
 def position_marker(self, lat, lon):
   marker = GoogleMap.Marker(
     animation=GoogleMap.Animation.DROP,

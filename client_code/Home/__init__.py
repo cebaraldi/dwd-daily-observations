@@ -20,6 +20,7 @@ class Home(HomeTemplate):
     regions = Globals.regions
     regions.insert(0,'<Please select a region>')
     self.region_dropdown.items = regions
+    regions_loaded = True    
     self.region_label.visible = True
   
   def region_dropdown_change(self, **event_args):
@@ -28,9 +29,10 @@ class Home(HomeTemplate):
       return [b for a, b in zip(list_a, list_b) if a == condition]
     self.weather_stations_dropdown.visible = True
     self.ws_label.visible = True
+    Globals.region = self.region_dropdown.selected_value
     ws = get_values_by_condition(Globals.weather_stations['region'], 
                                       Globals.weather_stations['name'], 
-                                      self.region_dropdown.selected_value)
+                                      Globals.region)
     ws.insert(0,'<Please select a station>')
     self.weather_stations_dropdown.items = ws
 
