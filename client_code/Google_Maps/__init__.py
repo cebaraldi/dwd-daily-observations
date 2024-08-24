@@ -45,7 +45,7 @@ class Google_Maps(Google_MapsTemplate):
       green_icon = GoogleMap.Icon(
             url="http://maps.google.com/mapfiles/kml/paddle/grn-blank.png"
           )
-    
+      self.map_of_germany.clear()   
       for n, lat, lon, h in zip(name, lat, lon, height):
         #print(f'{n} {lat} {lon} {h}')
         marker = GoogleMap.Marker(
@@ -53,7 +53,7 @@ class Google_Maps(Google_MapsTemplate):
           position=GoogleMap.LatLng(lat, lon),
           icon = green_icon
         )     
-        self.markers[marker]=f'{n}\n{h}'
+        self.markers[marker]=f'{n}\n{h}m a.s.l.'
         def marker_click(sender, **event_args):
           i = GoogleMap.InfoWindow(content=Label(text=self.markers[sender]))
           i.open(map, sender)
