@@ -53,7 +53,7 @@ class Google_Maps(Google_MapsTemplate):
           position=GoogleMap.LatLng(lat, lon),
           icon = green_icon
         )     
-        self.markers[marker]=f'{n}\n{h}m a.s.l.'
+        self.markers[marker]=f'{n}\n{h} m a.s.l.'
         def marker_click(sender, **event_args):
           i = GoogleMap.InfoWindow(content=Label(text=self.markers[sender]))
           i.open(map, sender)
