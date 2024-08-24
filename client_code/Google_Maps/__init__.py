@@ -15,6 +15,7 @@ class Google_Maps(Google_MapsTemplate):
     Globals.regions = sorted(list(set(Globals.weather_stations['region'])))
     self.drop_down_region.items = Globals.regions
     self.drop_down_region.placeholder = '<Please select a region>'
+    self.markers = {}
 
     # Center to map of germany
     lat = 51.3
