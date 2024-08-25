@@ -24,6 +24,13 @@ observations_loaded = False
 
 # Dropdown selection status and selected values
 region = None
-region_selected = False
+#region_selected = False !=None
 weather_station = None
-weather_station_selected = False
+#weather_station_selected = False !=None
+
+def check_globals():
+  print(f'region = {region}: region_selected = {region_selected}')
+  print(f'weather_station = {weather_station}: weather_station_selected = {weather_station_selected}')
+  print(f'regions_loaded: {regions_loaded}')
+  print(f'weather_stations_loaded = {weather_stations_loaded}')
+  print(f'observations_loaded = {observations_loaded}')

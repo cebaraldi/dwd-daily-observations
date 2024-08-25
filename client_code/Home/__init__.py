@@ -8,7 +8,7 @@ class Home(HomeTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    print(Globals.region)
+    Globals.check_globals()
     
     # Fill dropdown component for region selection
     if not Globals.weather_stations_loaded:
@@ -17,7 +17,10 @@ class Home(HomeTemplate):
       Globals.weather_stations_loaded = True
     Globals.regions = sorted(list(set(Globals.weather_stations['region'])))
     regions = Globals.regions
-    regions.insert(0,'<Please select a region>')
+    if Globals.region_selected:
+      print(Globals.region_selected)
+    else:
+      regions.insert(0,'<Please select a region>')
     self.region_dropdown.items = regions
     Globals.regions_loaded = True    
     self.region_label.visible = True
@@ -32,6 +35,8 @@ class Home(HomeTemplate):
     ws = get_values_by_condition(Globals.weather_stations['region'], 
                                       Globals.weather_stations['name'], 
                                       Globals.region)
+    
+    print(Globals.region)
     ws.insert(0,'<Please select a station>')
     self.weather_stations_dropdown.items = ws
 

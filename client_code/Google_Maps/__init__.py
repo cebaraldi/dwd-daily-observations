@@ -8,7 +8,9 @@ class Google_Maps(Google_MapsTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    print(Globals.region)
+    #print(Globals.region)
+    #if Globals.
+    Globals.check_globals()
     
     # Fill dropdown component for region selection
     Globals.regions = sorted(list(set(Globals.weather_stations['region'])))
@@ -17,7 +19,6 @@ class Google_Maps(Google_MapsTemplate):
     self.markers = {}
 
     # Center to map of germany
-
     self.map_of_germany.center = GoogleMap.LatLng(Globals.de_lat, Globals.de_lon)
     self.map_of_germany.zoom = Globals.de_zoom
 
@@ -55,4 +56,5 @@ class Google_Maps(Google_MapsTemplate):
           i = GoogleMap.InfoWindow(content=Label(text=self.markers[sender]))
           i.open(map, sender)
         marker.add_event_handler("click", marker_click)
-        self.map_of_germany.add_component(marker)
+        self.map_of_germany.add_component(marker)    
+      print(Globals.region)
