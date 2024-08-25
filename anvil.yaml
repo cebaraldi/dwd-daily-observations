@@ -1,58 +1,6 @@
 allow_embedding: false
 package_name: DWD_Observations___Dev
-db_schema:
-  users:
-    client: none
-    server: full
-    columns:
-    - name: email
-      admin_ui: {order: 0, width: 200}
-      type: string
-    - name: enabled
-      admin_ui: {order: 1, width: 200}
-      type: bool
-    - name: last_login
-      admin_ui: {order: 2, width: 200}
-      type: datetime
-    - name: password_hash
-      admin_ui: {order: 3, width: 200}
-      type: string
-    - name: n_password_failures
-      admin_ui: {order: 4, width: 200}
-      type: number
-    - name: confirmed_email
-      admin_ui: {order: 5, width: 200}
-      type: bool
-    title: Users
-  dwd_weatherstations:
-    client: none
-    server: search
-    columns:
-    - name: wsid
-      admin_ui: {width: 200, order: 0}
-      type: string
-    - name: date_from
-      admin_ui: {width: 200, order: 1}
-      type: date
-    - name: date_to
-      admin_ui: {width: 200, order: 2}
-      type: date
-    - name: height
-      admin_ui: {width: 200, order: 3}
-      type: number
-    - name: lat
-      admin_ui: {width: 200, order: 4}
-      type: number
-    - name: lon
-      admin_ui: {width: 200, order: 5}
-      type: number
-    - name: name
-      admin_ui: {width: 200, order: 6}
-      type: string
-    - name: region
-      admin_ui: {width: 200, order: 7}
-      type: string
-    title: DWD_WeatherStations
+db_schema: {}
 startup: {type: form, module: Home}
 name: DWD Observations
 startup_form: null

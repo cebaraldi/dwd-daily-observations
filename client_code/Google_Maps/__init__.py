@@ -1,9 +1,6 @@
 from ._anvil_designer import Google_MapsTemplate
 from anvil import *
 import anvil.server
-import anvil.tables as tables
-import anvil.tables.query as q
-from anvil.tables import app_tables
 from .. import Globals
 
 class Google_Maps(Google_MapsTemplate):
