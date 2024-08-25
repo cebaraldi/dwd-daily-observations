@@ -8,6 +8,8 @@ class Google_Maps(Google_MapsTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
+    print(Globals.region)
+    
     # Fill dropdown component for region selection
     Globals.regions = sorted(list(set(Globals.weather_stations['region'])))
     self.drop_down_region.items = Globals.regions

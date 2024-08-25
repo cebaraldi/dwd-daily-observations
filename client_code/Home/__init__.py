@@ -8,16 +8,18 @@ class Home(HomeTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
+    print(Globals.region)
+    
     # Fill dropdown component for region selection
     if not Globals.weather_stations_loaded:
       url = url = Globals.url + Globals.recent_path + Globals.filename
       Globals.weather_stations = anvil.server.call('dl_to_weather_stations', url)# Main
-      Globals.ws_loaded = True
+      Globals.weather_stations_loaded = True
     Globals.regions = sorted(list(set(Globals.weather_stations['region'])))
     regions = Globals.regions
     regions.insert(0,'<Please select a region>')
     self.region_dropdown.items = regions
-    regions_loaded = True    
+    Globals.regions_loaded = True    
     self.region_label.visible = True
   
   def region_dropdown_change(self, **event_args):
