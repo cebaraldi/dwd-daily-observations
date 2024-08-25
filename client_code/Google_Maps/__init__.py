@@ -15,11 +15,9 @@ class Google_Maps(Google_MapsTemplate):
     self.markers = {}
 
     # Center to map of germany
-    lat = 51.3
-    lon = 9.4
-    zoom = 6.2
-    self.map_of_germany.center = GoogleMap.LatLng(lat, lon)
-    self.map_of_germany.zoom = zoom
+
+    self.map_of_germany.center = GoogleMap.LatLng(Globals.de_lat, Globals.de_lon)
+    self.map_of_germany.zoom = Globals.de_zoom
 
   def drop_down_region_change(self, **event_args):
     """This method is called when an item is selected"""
