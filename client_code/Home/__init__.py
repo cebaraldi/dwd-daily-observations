@@ -45,11 +45,13 @@ class Home(HomeTemplate):
     # debug
     Globals.check_globals()    
     # wsid from Globals.region and  Globals.weather_station
-    print(Globals.weather_stations)
-    if self.weather_stations_dropdown.selected_value != '<Please select a station>':
-      ws = anvil.server.call('dl_observations', 
-                            Globals.region,
-                            Globals.weather_station)
-
+    print(Globals.weather_stations.keys())
+    print(Globals.weather_stations['wsid'])
+    print(Globals.weather_stations['name'])
+    print(Globals.weather_stations['region'])
+    zl = list(zip(                 ))
     
-
+#    if self.weather_stations_dropdown.selected_value != '<Please select a station>':
+#      ws = anvil.server.call('dl_observations', 
+#                            Globals.region,
+#                            Globals.weather_station)
