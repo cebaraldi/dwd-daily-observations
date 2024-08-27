@@ -9,56 +9,61 @@ import zipfile
 from urllib.request import urlretrieve
 import pandas as pd
 
-@anvil.server.callable
-def extract_year_from_date(date_value):
-  year = date_value.year
-  return year
+#@anvil.server.callable
+#def extract_year_from_date(date_value):
+#  year = date_value.year
+#  return year
   
-@anvil.server.callable
-def get_records_for_year(table_name, date_column_name, year):
-  """
-  Retrieves records from a table where the specified date column's year matches the given year.
-
-  Args:
-    table_name (str): The name of the table.
-    date_column_name (str): The name of the date column.
-    year (int): The target year.
-
-  Returns:
-    list: A list of records matching the criteria.
-  """
-  table = app_tables[table_name]
-  records = table.search(**{date_column_name: q.date_extract('year') == year})
-  return records
+#@anvil.server.callable
+#def get_records_for_year(table_name, date_column_name, year):
+#  """
+#  Retrieves records from a table where the specified date column's year matches the given year.
+#
+#  Args:
+#    table_name (str): The name of the table.
+#    date_column_name (str): The name of the date column.
+#    year (int): The target year.
+#
+#  Returns:
+#    list: A list of records matching the criteria.
+#  """
+#  table = app_tables[table_name]
+#  records = table.search(**{date_column_name: q.date_extract('year') == year})
+#  return records
   
-@anvil.server.callable
-def get_region():
-  rows =  app_tables.dwd_weatherstations.search()
-  unique_values = set(row['region'] for row in rows)
-  sorted_values = sorted(list(unique_values))
-  sorted_values.insert(0,"<Please select a region>")
-  return sorted_values  
+#@anvil.server.callable
+#def get_region():
+#  rows =  app_tables.dwd_weatherstations.search()
+#  unique_values = set(row['region'] for row in rows)
+#  sorted_values = sorted(list(unique_values))
+#  sorted_values.insert(0,"<Please select a region>")
+#  return sorted_values  
 
-@anvil.server.callable
-def get_ws(region):
-  rows = app_tables.dwd_weatherstations.search(region=q.ilike(region))
-  unique_values = set(row['name'] for row in rows)
-  sorted_values = sorted(list(unique_values))
-  sorted_values.insert(0,"<Please select a station>")
-  return sorted_values
+#@anvil.server.callable
+#def get_ws(region):
+#  rows = app_tables.dwd_weatherstations.search(region=q.ilike(region))
+#  unique_values = set(row['name'] for row in rows)
+#  sorted_values = sorted(list(unique_values))
+#  sorted_values.insert(0,"<Please select a station>")
+#  return sorted_values
 
 @anvil.server.callable
 def dl_observations(region, ws):
-  record = app_tables.dwd_weatherstations.search(
-    name=q.ilike(ws), 
-    region=q.ilike(region)
-  )
+#  record = app_tables.dwd_weatherstations.search(
+#    name=q.ilike(ws), 
+#    region=q.ilike(region)
+#  )
   url = "https://opendata.dwd.de/"
   path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
   recent_path = path + 'recent/'
   #historical_path = path + 'historical/'
-
-  for r in record:
+  #records = requests.get(url)
+  #print(records.headers["Content-Type"])
+  #print(records.text)
+  print(weather_stations)
+  
+  for r in records:
+    print(r.json())
     filename = f"tageswerte_KL_{r['wsid']}_akt.zip"
     #print(filename)
     # BINARY Data

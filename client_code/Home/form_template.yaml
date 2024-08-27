@@ -12,16 +12,16 @@ components_by_slot:
       type: Label
       layout_properties: {row: GXJNNG, width_xs: 3, col_xs: 0}
     - name: ws_label
-      properties: {text: Select a station, visible: false}
+      properties: {text: Select a station, visible: true}
       type: Label
       layout_properties: {row: GXJNNG, width_xs: 3, col_xs: 6}
     - name: region_dropdown
-      properties: {visible: true}
+      properties: {visible: true, include_placeholder: true}
       type: DropDown
       layout_properties: {row: IJBWDL, width_xs: 6, col_xs: 0}
       event_bindings: {change: region_dropdown_change}
     - name: weather_stations_dropdown
-      properties: {visible: false}
+      properties: {visible: true, enabled: false}
       type: DropDown
       layout_properties: {row: IJBWDL, width_xs: 6, col_xs: 6}
       event_bindings: {change: weather_stations_dropdown_change}

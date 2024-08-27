@@ -8,12 +8,12 @@ class Google_Maps(Google_MapsTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    #print(Globals.region)
-    #if Globals.
+    # debug
     Globals.check_globals()
     
     # Fill dropdown component for region selection
     Globals.regions = sorted(list(set(Globals.weather_stations['region'])))
+    Globals.regions_extracted = True
     self.drop_down_region.items = Globals.regions
     self.drop_down_region.placeholder = '<Please select a region>'
     self.markers = {}
@@ -23,7 +23,6 @@ class Google_Maps(Google_MapsTemplate):
     self.map_of_germany.zoom = Globals.de_zoom
 
   def drop_down_region_change(self, **event_args):
-    """This method is called when an item is selected"""
     def get_values_by_condition(list_a, list_b, condition):
       return [b for a, b in zip(list_a, list_b) if a == condition]
     Globals.region =self.drop_down_region.selected_value
@@ -57,4 +56,5 @@ class Google_Maps(Google_MapsTemplate):
           i.open(map, sender)
         marker.add_event_handler("click", marker_click)
         self.map_of_germany.add_component(marker)    
-      print(Globals.region)
+      # debug
+      Globals.check_globals()
