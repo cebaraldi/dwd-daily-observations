@@ -48,39 +48,30 @@ import pandas as pd
 #  return sorted_values
 
 @anvil.server.callable
-def dl_observations(region, ws):
-#  record = app_tables.dwd_weatherstations.search(
-#    name=q.ilike(ws), 
-#    region=q.ilike(region)
-#  )
+def dl_observations(wsid, date_from, date_to):
   url = "https://opendata.dwd.de/"
   path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
   recent_path = path + 'recent/'
-  #historical_path = path + 'historical/'
-  #records = requests.get(url)
-  #print(records.headers["Content-Type"])
-  #print(records.text)
-  print(weather_stations)
-  
-  for r in records:
-    print(r.json())
-    filename = f"tageswerte_KL_{r['wsid']}_akt.zip"
-    #print(filename)
-    # BINARY Data
-    url = url + recent_path + filename
-    print(url, filename)
+  historical_path = path + 'historical/'
 
-#    if not os.path.exists(filename):
-#      urlretrieve(url, filename)
-#      
-#      try:
-#        with zipfile.ZipFile(filename, mode="r") as archive:
-#          for file in archive.namelist():
-#            if file.endswith("/tmp/produkt_klima_tag_*.txt"):
-#              archive.extract(file, ".")
-#              print(file)
-#      except FileNotFoundError:
-#        return False
+  recent_filename = f'tageswerte_KL_{wsid}_akt.zip'
+  historical_filename = f'tageswerte_KL_{wsid}_{date_from}_{date_to}_hist.zip'
+  
+  # BINARY Data
+  print(url + recent_path, recent_filename)
+  print(url + historical_path, historical_filename)
+
+  if not os.path.exists(filename):
+    urlretrieve(url, filename)
+    
+    try:
+      with zipfile.ZipFile(filename, mode="r") as archive:
+        for file in archive.namelist():
+          if file.endswith("/tmp/produkt_klima_tag_*.txt"):
+            archive.extract(file, ".")
+            print(file)
+    except FileNotFoundError:
+      return False
 
 @anvil.server.callable
 def dl_to_weather_stations(url):

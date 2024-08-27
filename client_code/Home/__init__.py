@@ -41,17 +41,19 @@ class Home(HomeTemplate):
 
   def weather_stations_dropdown_change(self, **event_args):
     Globals.weather_station = self.weather_stations_dropdown.selected_value
-    
+    print()
     # debug
     Globals.check_globals()    
-    # wsid from Globals.region and  Globals.weather_station
     print(Globals.weather_stations.keys())
-    print(Globals.weather_stations['wsid'])
-    print(Globals.weather_stations['name'])
-    print(Globals.weather_stations['region'])
-    zl = list(zip(                 ))
-    
-#    if self.weather_stations_dropdown.selected_value != '<Please select a station>':
-#      ws = anvil.server.call('dl_observations', 
-#                            Globals.region,
-#                            Globals.weather_station)
+    # Zip into a list of tuploes
+    zl = list(zip(Globals.weather_stations['wsid'], 
+                  Globals.weather_stations['name'],
+                  Globals.weather_stations['region'],
+                  Globals.weather_stations['date_from'],
+                  Globals.weather_stations['date_to']
+                 ))
+    found_tuple = [t for t in zl if t[1] == Globals.weather_station and t[2] == Globals.region]
+    wsid = found_tuple[0][0]
+    date_from = found_tuple[0][3]
+    date_to = found_tuple[0][4]
+    ws = anvil.server.call('dl_observations', wsid, date_from, date_to)
