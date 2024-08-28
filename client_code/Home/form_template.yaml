@@ -74,6 +74,10 @@ components_by_slot:
       name: data_row_panel_1
       properties: {}
       type: DataRowPanel
+    - layout_properties: {col_xs: 0, row: XAAPWY, width_xs: 12}
+      name: plot_1
+      properties: {}
+      type: Plot
     layout_properties: {}
     name: grid_panel_1
     properties: {}
