@@ -2,6 +2,7 @@ from ._anvil_designer import HomeTemplate
 from anvil import *
 import plotly.graph_objects as go
 import anvil.server
+from datetime import datetime
 from .. import Globals
 
 def strings_to_dates(string_list, date_format="%Y-%m-%d"):  # Adjust date format as needed
@@ -114,7 +115,16 @@ class Home(HomeTemplate):
     print(y)
 
     # Create a Plotly figure
-    fig = go.Figure(data=go.Scatter(x=x, y=y))
-
+    fig = go.Figure(data=go.Scatter(x=x, y=y),
+                    title=Globals.weather_station,
+                   )
+#    fig.update_layout(
+#        title=go.layout.Title(
+#            text=f'{Globals.weather_station} / {Globals.region}',
+#            xref="paper",
+#            x=0
+#        )
+#    )
+    
     # Display the plot in an Anvil Plot component (client side)
     self.plot_1.figure = fig    
