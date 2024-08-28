@@ -58,5 +58,5 @@ class Home(HomeTemplate):
     wsid = found_tuple[0][0]
     date_from = found_tuple[0][3]
     date_to = found_tuple[0][4]
-    ws = anvil.server.call('dl_observations', wsid, date_from, date_to)
+    ws = anvil.server.call('dl_zip', wsid, date_from, date_to)
 
