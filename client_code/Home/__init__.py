@@ -109,19 +109,7 @@ class Home(HomeTemplate):
     # Plotly: plotting with go.Figure()
     x = strings_to_dates(obsdate, date_format="%Y%m%d")
     y = replace_negative_999(strings_to_floats(tavg))
-
-    # Create a Plotly figure
-#    fig = go.Figure(data=go.Scatter(x=x, y=y),
-#                    title=Globals.weather_station,
-#                   )
-#    fig.update_layout(
-#        title=go.layout.Title(
-#            text=f'{Globals.weather_station} / {Globals.region}',
-#            xref="paper",
-#            x=0
-#        )
-#    )
-    
+   
     # Specify the layout
     layout = go.Layout(
       title=go.layout.Title(text=f'{Globals.weather_station} / {Globals.region}', x=0.5),
