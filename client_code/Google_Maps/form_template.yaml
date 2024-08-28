@@ -1,22 +1,22 @@
-layout: {type: 'form:ceb_Layout'}
-is_package: true
 components_by_slot:
   slot_1:
-  - name: drop_down_region
+  - data_bindings:
+    - {code: 'self.item[''regions'']', property: tag, writeback: false}
+    event_bindings: {change: drop_down_region_change}
+    layout_properties: {}
+    name: drop_down_region
     properties:
       include_placeholder: true
-      placeholder: ''
       items: []
+      placeholder: ''
     type: DropDown
-    layout_properties: {}
-    event_bindings: {change: drop_down_region_change}
-    data_bindings:
-    - {property: tag, code: 'self.item[''regions'']', writeback: false}
-  - name: map_of_germany
+  - layout_properties: {}
+    name: map_of_germany
     properties: {height: '680'}
     type: GoogleMap
-    layout_properties: {}
-  - name: grid_panel_1
+  - layout_properties: {}
+    name: grid_panel_1
     properties: {}
     type: GridPanel
-    layout_properties: {}
+is_package: true
+layout: {type: 'form:ceb_Layout'}

@@ -1,82 +1,82 @@
-layout: {type: 'form:ceb_Layout'}
-is_package: true
 components_by_slot:
   slot_1:
-  - name: grid_panel_1
-    properties: {}
-    type: GridPanel
-    layout_properties: {}
-    components:
-    - name: region_label
+  - components:
+    - layout_properties: {col_xs: 0, row: GXJNNG, width_xs: 3}
+      name: region_label
       properties: {text: Select a region, visible: true}
       type: Label
-      layout_properties: {row: GXJNNG, width_xs: 3, col_xs: 0}
-    - name: ws_label
+    - layout_properties: {col_xs: 6, row: GXJNNG, width_xs: 3}
+      name: ws_label
       properties: {text: Select a station, visible: true}
       type: Label
-      layout_properties: {row: GXJNNG, width_xs: 3, col_xs: 6}
-    - name: region_dropdown
-      properties: {visible: true, include_placeholder: true}
+    - event_bindings: {change: region_dropdown_change}
+      layout_properties: {col_xs: 0, row: IJBWDL, width_xs: 6}
+      name: region_dropdown
+      properties: {include_placeholder: true, visible: true}
       type: DropDown
-      layout_properties: {row: IJBWDL, width_xs: 6, col_xs: 0}
-      event_bindings: {change: region_dropdown_change}
-    - name: weather_stations_dropdown
-      properties: {visible: true, enabled: false}
+    - event_bindings: {change: weather_stations_dropdown_change}
+      layout_properties: {col_xs: 6, row: IJBWDL, width_xs: 6}
+      name: weather_stations_dropdown
+      properties: {enabled: false, include_placeholder: true, visible: true}
       type: DropDown
-      layout_properties: {row: IJBWDL, width_xs: 6, col_xs: 6}
-      event_bindings: {change: weather_stations_dropdown_change}
-    - name: data_row_panel_1
-      properties: {}
-      type: DataRowPanel
-      layout_properties: {row: PQUKLF, width_xs: 6, col_xs: 0}
-      components:
-      - name: outlined_card_1
-        properties: {role: outlined-card}
-        type: ColumnPanel
-        layout_properties: {}
-        components:
-        - name: check_box_1
-          properties: {text: Recent, checked: true}
+    - components:
+      - components:
+        - layout_properties: {grid_position: 'JIMAMT,IGUYLY'}
+          name: check_box_1
+          properties: {checked: true, text: Recent}
           type: CheckBox
-          layout_properties: {grid_position: 'JIMAMT,IGUYLY'}
-        - name: check_box_2
+        - layout_properties: {grid_position: 'JIMAMT,JNWUNH'}
+          name: check_box_2
           properties: {text: Historical}
           type: CheckBox
-          layout_properties: {grid_position: 'JIMAMT,JNWUNH'}
-      - name: outlined_card_2
+        layout_properties: {}
+        name: outlined_card_1
         properties: {role: outlined-card}
         type: ColumnPanel
+      - components:
+        - layout_properties: {grid_position: 'DBDHGN,VIEWTJ YLMNOB,JQDXEX'}
+          name: radio_button_1
+          properties: {group_name: observables, selected: true, text: Air Temperature}
+          type: RadioButton
+        - layout_properties: {grid_position: 'DBDHGN,VIEWTJ EAXXXV,MCPXVU'}
+          name: radio_button_3
+          properties: {group_name: observables, text: Precipitation}
+          type: RadioButton
+        - layout_properties: {grid_position: 'DBDHGN,VIEWTJ NTQNHM,IOFWSK'}
+          name: radio_button_5
+          properties: {group_name: observables, text: Cloud Cover}
+          type: RadioButton
+        - layout_properties: {grid_position: 'DBDHGN,VIEWTJ AVCSXQ,LGYODO'}
+          name: radio_button_7
+          properties: {group_name: observables, text: Total Snow Cover}
+          type: RadioButton
+        - layout_properties: {grid_position: 'DBDHGN,KAGKYO BYSVEW,BJAMFV'}
+          name: radio_button_2
+          properties: {group_name: observables, text: Air Pressure}
+          type: RadioButton
+        - layout_properties: {grid_position: 'DBDHGN,KAGKYO YNYQMK,UBDBZG'}
+          name: radio_button_4
+          properties: {group_name: observables, text: Relative Air Humidity}
+          type: RadioButton
+        - layout_properties: {grid_position: 'DBDHGN,KAGKYO PAUFRA,XGLDIB'}
+          name: radio_button_6
+          properties: {group_name: observables, text: Sunshine Duration}
+          type: RadioButton
+        - layout_properties: {grid_position: 'DBDHGN,KAGKYO HRYKFZ,RMZPXL'}
+          name: radio_button_8
+          properties: {group_name: observables, text: Summary Statistics}
+          type: RadioButton
         layout_properties: {}
-        components:
-        - name: radio_button_1
-          properties: {text: Air Temperature, group_name: observables, selected: true}
-          type: RadioButton
-          layout_properties: {grid_position: 'DBDHGN,VIEWTJ YLMNOB,JQDXEX'}
-        - name: radio_button_3
-          properties: {text: Precipitation, group_name: observables}
-          type: RadioButton
-          layout_properties: {grid_position: 'DBDHGN,VIEWTJ EAXXXV,MCPXVU'}
-        - name: radio_button_5
-          properties: {text: Cloud Cover, group_name: observables}
-          type: RadioButton
-          layout_properties: {grid_position: 'DBDHGN,VIEWTJ NTQNHM,IOFWSK'}
-        - name: radio_button_7
-          properties: {text: Total Snow Cover, group_name: observables}
-          type: RadioButton
-          layout_properties: {grid_position: 'DBDHGN,VIEWTJ AVCSXQ,LGYODO'}
-        - name: radio_button_2
-          properties: {text: Air Pressure, group_name: observables}
-          type: RadioButton
-          layout_properties: {grid_position: 'DBDHGN,KAGKYO BYSVEW,BJAMFV'}
-        - name: radio_button_4
-          properties: {text: Relative Air Humidity, group_name: observables}
-          type: RadioButton
-          layout_properties: {grid_position: 'DBDHGN,KAGKYO YNYQMK,UBDBZG'}
-        - name: radio_button_6
-          properties: {text: Sunshine Duration, group_name: observables}
-          type: RadioButton
-          layout_properties: {grid_position: 'DBDHGN,KAGKYO PAUFRA,XGLDIB'}
-        - name: radio_button_8
-          properties: {text: Summary Statistics, group_name: observables}
-          type: RadioButton
-          layout_properties: {grid_position: 'DBDHGN,KAGKYO HRYKFZ,RMZPXL'}
+        name: outlined_card_2
+        properties: {role: outlined-card}
+        type: ColumnPanel
+      layout_properties: {col_xs: 0, row: PQUKLF, width_xs: 6}
+      name: data_row_panel_1
+      properties: {}
+      type: DataRowPanel
+    layout_properties: {}
+    name: grid_panel_1
+    properties: {}
+    type: GridPanel
+is_package: true
+layout: {type: 'form:ceb_Layout'}

@@ -1,5 +1,5 @@
-is_package: true
-container:
-  type: ColumnPanel
-  data_bindings: []
 components: []
+container:
+  data_bindings: []
+  type: ColumnPanel
+is_package: true

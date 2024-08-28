@@ -27,7 +27,7 @@ class Home(HomeTemplate):
     def get_values_by_condition(list_a, list_b, condition):
       return [b for a, b in zip(list_a, list_b) if a == condition]
     self.weather_stations_dropdown.enabled = True
-    print(f'selected region = {self.region_dropdown.selected_value}')
+    #print(f'selected region = {self.region_dropdown.selected_value}')
     Globals.region = self.region_dropdown.selected_value
     ws = get_values_by_condition(Globals.weather_stations['region'], 
                                       Globals.weather_stations['name'], 
@@ -37,6 +37,8 @@ class Home(HomeTemplate):
     Globals.check_globals()
     
     #ws.insert(0,'<Please select a station>')
+    print('fill weather_stations_dropdown')
+    self.weather_stations_dropdown.placeholder = '<Please select a station>'
     self.weather_stations_dropdown.items = ws
 
   def weather_stations_dropdown_change(self, **event_args):

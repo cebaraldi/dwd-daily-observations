@@ -1,20 +1,20 @@
 allow_embedding: false
-package_name: DWD_Observations___Dev
-db_schema: {}
-startup: {type: form, module: Home}
-name: DWD Observations
-startup_form: null
 correct_dependency_ids: {}
+db_schema: {}
+dependencies: []
+name: DWD Observations
+native_deps: null
+package_name: DWD_Observations___Dev
 renamed: true
 runtime_options:
-  version: 3
   client_version: '3'
-  server_version: python3-sandbox
+  legacy_features: {__dict__: true, bootstrap3: true, class_names: true, root_container: true}
   server_spec: {base: python310-standard}
-  legacy_features: {class_names: true, bootstrap3: true, __dict__: true, root_container: true}
-dependencies: []
+  server_version: python3-sandbox
+  version: 3
 services:
-- source: /runtime/services/tables.yml
-  client_config: {}
+- client_config: {}
   server_config: {}
-native_deps: null
+  source: /runtime/services/tables.yml
+startup: {module: Home, type: form}
+startup_form: null

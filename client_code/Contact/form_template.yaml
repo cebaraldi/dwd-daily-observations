@@ -1,8 +1,8 @@
-layout: {type: 'form:ceb_Layout'}
-is_package: true
 components_by_slot:
   slot_1:
-  - name: label_1
+  - layout_properties: {}
+    name: label_1
     properties: {text: Contact}
     type: Label
-    layout_properties: {}
+is_package: true
+layout: {type: 'form:ceb_Layout'}

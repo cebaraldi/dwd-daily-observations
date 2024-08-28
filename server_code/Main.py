@@ -61,11 +61,11 @@ def dl_observations(wsid, date_from, date_to):
   print(url + recent_path, recent_filename)
   print(url + historical_path, historical_filename)
 
-  if not os.path.exists(filename):
-    urlretrieve(url, filename)
+  if not os.path.exists(recent_filename):
+    urlretrieve(url, recent_filename)
     
     try:
-      with zipfile.ZipFile(filename, mode="r") as archive:
+      with zipfile.ZipFile(recent_filename, mode="r") as archive:
         for file in archive.namelist():
           if file.endswith("/tmp/produkt_klima_tag_*.txt"):
             archive.extract(file, ".")
