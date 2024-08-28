@@ -106,18 +106,14 @@ class Home(HomeTemplate):
     print(f"Length of mininum temperatue observations is {len(tmin)}")
     print(f"Length of maxinum temperatue observations is {len(tmax)}")
 
-    # Sample data
-    #x = [1, 2, 3, 4, 5]
-    #y = [2, 4, 5, 4, 5]
+    # Plotly: plotting with go.Figure()
     x = strings_to_dates(obsdate, date_format="%Y%m%d")
-    #y = strings_to_floats(tavg)
     y = replace_negative_999(strings_to_floats(tavg))
-    print(y)
 
     # Create a Plotly figure
-    fig = go.Figure(data=go.Scatter(x=x, y=y),
-                    title=Globals.weather_station,
-                   )
+#    fig = go.Figure(data=go.Scatter(x=x, y=y),
+#                    title=Globals.weather_station,
+#                   )
 #    fig.update_layout(
 #        title=go.layout.Title(
 #            text=f'{Globals.weather_station} / {Globals.region}',
@@ -126,5 +122,18 @@ class Home(HomeTemplate):
 #        )
 #    )
     
+    # Specify the layout
+    layout = go.Layout(
+      title=go.layout.Title(text=f'{Globals.weather_station} / {Globals.region}', x=0.5),
+      xaxis_title='Date',
+      yaxis_title='Temperature [℃]'
+      #xaxis_tickmode="array",
+      #xaxis_tickvals=list(range(27)),
+      #xaxis_ticktext=tuple(df['year'].values),
+    )
+        
+    # Make the scatter plot
+    fig = go.Figure(data=go.Scatter(x=x, y=y), layout=layout)
+
     # Display the plot in an Anvil Plot component (client side)
     self.plot_1.figure = fig    
