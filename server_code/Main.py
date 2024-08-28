@@ -109,6 +109,26 @@ def dl_observations(wsid, date_from, date_to):
     except FileNotFoundError:
       return False
 
+def dict_to_dataframe(data_dict):
+  """Converts a dictionary with a binary string value into a Pandas DataFrame.
+
+  Args:
+    data_dict: The input dictionary.
+
+  Returns:
+    A Pandas DataFrame.
+  """
+  value = next(iter(data_dict.values()))  # Extract the value
+  decoded_value = value.decode('utf-8')  # Decode the byte string
+  records = decoded_value.strip().split('eor\r\n')
+  data = [record.split(';') for record in records]
+  # Trim column names using strip()
+  df = pd.DataFrame(data[1:], columns=(s.strip() for s in data[0]))
+  df = df[df.columns[:-1]]
+  # Remove leading and trailing spaces from all columns
+  df = df.apply(lambda x: x.str.strip() if x.dtype == 'object' else x)  
+  return(df)  
+  
 @anvil.server.callable
 def dl_zip(wsid, date_from, date_to):
   url = "https://opendata.dwd.de/"
