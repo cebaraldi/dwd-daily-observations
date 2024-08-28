@@ -58,5 +58,29 @@ class Home(HomeTemplate):
     wsid = found_tuple[0][0]
     date_from = found_tuple[0][3]
     date_to = found_tuple[0][4]
-    ws = anvil.server.call('dl_zip', wsid, date_from, date_to)
+    data = anvil.server.call('dl_zip', wsid, date_from, date_to)
+    Notification('observations downloaded').show()
+    
+    print(data.keys())
+    obsdate = data['MESS_DATUM']
+    tmin = data['TNK']
+    tavg = data['TMK']
+    tmax = data['TXK']
+    print(obsdate)
+    print(tavg)
+    print(f"Length of mininum temperatue observations is {len(tmin)}")
+    print(f"Length of maxinum temperatue observations is {len(tmax)}")
 
+    # Sample data
+    #x = [1, 2, 3, 4, 5]
+    #y = [2, 4, 5, 4, 5]
+    x = strings_to_dates(obsdate, date_format="%Y%m%d")
+    #y = strings_to_floats(tavg)
+    y = replace_negative_999(strings_to_floats(tavg))
+    print(y)
+
+    # Create a Plotly figure
+    fig = go.Figure(data=go.Scatter(x=x, y=y))
+
+    # Display the plot in an Anvil Plot component (client side)
+    self.plot_1.figure = fig    
