@@ -48,32 +48,6 @@ import pandas as pd
 #  return sorted_values
 
 @anvil.server.callable
-def dl_observations(wsid, date_from, date_to):
-  url = "https://opendata.dwd.de/"
-  path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
-  recent_path = path + 'recent/'
-  historical_path = path + 'historical/'
-
-  recent_filename = f'tageswerte_KL_{wsid}_akt.zip'
-  historical_filename = f'tageswerte_KL_{wsid}_{date_from}_{date_to}_hist.zip'
-  
-  # BINARY Data
-  print(url + recent_path, recent_filename)
-  print(url + historical_path, historical_filename)
-
-  if not os.path.exists(recent_filename):
-    urlretrieve(url, recent_filename)
-    
-    try:
-      with zipfile.ZipFile(recent_filename, mode="r") as archive:
-        for file in archive.namelist():
-          if file.endswith("/tmp/produkt_klima_tag_*.txt"):
-            archive.extract(file, ".")
-            print(file)
-    except FileNotFoundError:
-      return False
-
-@anvil.server.callable
 def dl_to_weather_stations(url):
   response = requests.get(url)
   if response.status_code == 200:
@@ -108,3 +82,49 @@ def dl_to_weather_stations(url):
     df['lon'] = pd.to_numeric(df['lon'], downcast="float")
     #print(df.head())
   return(df.to_dict('list'))
+
+@anvil.server.callable
+def dl_observations(wsid, date_from, date_to):
+  url = "https://opendata.dwd.de/"
+  path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
+  recent_path = path + 'recent/'
+  historical_path = path + 'historical/'
+
+  recent_filename = f'tageswerte_KL_{wsid}_akt.zip'
+  historical_filename = f'tageswerte_KL_{wsid}_{date_from}_{date_to}_hist.zip'
+  
+  # BINARY Data
+  print(url + recent_path, recent_filename)
+  print(url + historical_path, historical_filename)
+
+  if not os.path.exists(recent_filename):
+    urlretrieve(url, recent_filename)
+    
+    try:
+      with zipfile.ZipFile(recent_filename, mode="r") as archive:
+        for file in archive.namelist():
+          if file.endswith("/tmp/produkt_klima_tag_*.txt"):
+            archive.extract(file, ".")
+            print(file)
+    except FileNotFoundError:
+      return False
+
+@anvil.server.callable
+def dl_zip(wsid, date_from, date_to):
+  url = "https://opendata.dwd.de/"
+  path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
+  recent_path = path + 'recent/'
+  filename = f"tageswerte_KL_{wsid}_akt.zip"
+  url = url + recent_path + filename
+  body = {}
+  r = requests.get(url)
+  with closing(r), zipfile.ZipFile(io.BytesIO(r.content)) as archive:   
+    # print({member.filename: archive.read(member) for member in archive.infolist()})
+    body ={member.filename: archive.read(member) 
+           for member in archive.infolist() 
+           if (member.filename.startswith('produkt_klima_tag_'))
+          }
+  df = dict_to_dataframe(body)
+  df = df.drop('STATIONS_ID', axis=1) # already given as parameter
+  dict_list = df.to_dict('list')
+  return(dict_list)
