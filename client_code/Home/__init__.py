@@ -98,30 +98,28 @@ class Home(HomeTemplate):
       data = anvil.server.call('dl_zip', wsid, date_from, date_to)
       Globals.observations_loaded =  True
     
-    print(data.keys())
+    #print(data.keys())
     obsdate = data['MESS_DATUM']
-    tmin = data['TNK']
+    #tmin = data['TNK']
     tavg = data['TMK']
-    tmax = data['TXK']
-    print(obsdate)
-    print(tavg)
-    print(f"Length of mininum temperatue observations is {len(tmin)}")
-    print(f"Length of maxinum temperatue observations is {len(tmax)}")
+    #tmax = data['TXK']
+    #print(obsdate)
+    #print(tavg)
+    #print(f"Length of mininum temperatue observations is {len(tmin)}")
+    #print(f"Length of maxinum temperatue observations is {len(tmax)}")
 
     # Plotly: plotting with go.Figure()
     x = strings_to_dates(obsdate, date_format="%Y%m%d")
     y = replace_negative_999(strings_to_floats(tavg))
     count = sum(1 for e in y if e is not None)
-    print(f'existing values = {count}')
+    if count == 0:
+      Notification('No observations available!',  style="warning").show()
    
     # Specify the layout
     layout = go.Layout(
       title=go.layout.Title(text=f'{wsid} - {Globals.weather_station} / {Globals.region}', x=0.5),
       xaxis_title='Date',
       yaxis_title='Temperature [℃]'
-      #xaxis_tickmode="array",
-      #xaxis_tickvals=list(range(27)),
-      #xaxis_ticktext=tuple(df['year'].values),
     )
         
     # Make the scatter plot
@@ -129,5 +127,6 @@ class Home(HomeTemplate):
 
     # Display the plot in an Anvil Plot component (client side)
     self.plot_1.figure = fig    
+    
     # debug
     Globals.check_globals()
