@@ -53,6 +53,7 @@ import json
 
 @anvil.server.callable
 def dl_to_weather_stations(url):
+  print(url)
   response = requests.get(url)
   if response.status_code == 200:
     lines = response.text.splitlines()
@@ -62,8 +63,8 @@ def dl_to_weather_stations(url):
     date_to = []
     height = []
     lat = []
-    lon = []
-    city = []
+    lng = []
+    station = []
     region = []
     for line in lines[2:]:
       
@@ -72,31 +73,31 @@ def dl_to_weather_stations(url):
       date_to.append(line[15:23])
       height.append(line[24:38])
       lat.append(line[39:50])
-      lon.append(line[51:60])
-      city.append(line[61:101]) #.strip())
-      region.append(line[102:]) #.strip())
+      lng.append(line[51:60])
+      station.append(line[61:101].strip()) #.strip())
+      region.append(line[102:142].strip()) #.strip())
 
       
-      print(f'{line[0:5]}: {len(line[0:5])}')
-      print(f'{line[6:14]}: {len(line[6:14])}')
-      print(f'{line[15:23]}: {len(line[15:23])}')
-      print(f'{line[24:38]}: {len(line[24:38])}')
-      print(f'{line[39:50]}: {len(line[39:50])}')
-      print(f'{line[51:60]}: {len(line[51:60])}')
-      print(f'{line[61:101]}: {len(line[61:101])}')
-      print(f'{line[102:]}: {len(line[102:])}')
+      print(f'{wsid}: {len(wsid)}')
+      print(f'{date_from}: {len(date_from)}')
+      print(f'{date_to}: {len(date_to)}')
+      print(f'{height}: {len(height)}')
+      print(f'{lat}: {len(lat)}')
+      print(f'{lng}: {len(lng)}')
+      print(f'{station}: {len(station)}')
+      print(f'{region}: {len(region)}')
 
     
     # dictionary of lists 
     dict = {'wsid': wsid, 'date_from': date_from, 'date_to': date_to, 'height': height, # [m]
-            'lat': lat, 'lon': lon, 'name': city, 'region': region} # [°]
+            'lat': lat, 'lng': lng, 'name': station, 'region': region} # [°]
     df = pd.DataFrame(dict) #.drop(index=[0,1])
     # Convert columns
     df['date_from'] = pd.to_datetime(df['date_from']).dt.date
     df['date_to'] = pd.to_datetime(df['date_to']).dt.date
     df['height'] = pd.to_numeric(df['height'], downcast="integer")
     df['lat'] = pd.to_numeric(df['lat'], downcast="float")
-    df['lon'] = pd.to_numeric(df['lon'], downcast="float")
+    df['lng'] = pd.to_numeric(df['lng'], downcast="float")
     #print(df.head())
   return(df.to_dict('list'))
 
