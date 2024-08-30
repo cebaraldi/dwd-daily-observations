@@ -66,17 +66,27 @@ def dl_to_weather_stations(url):
     city = []
     region = []
     for line in lines[2:]:
-      #print(line)
+      
       wsid.append(line[0:5])
       date_from.append(line[6:14])
-      #print(f'{line[6:14]}: {len(line[6:14])}')
       date_to.append(line[15:23])
-      #print(f'{line[15:23]}: {len(line[15:23])}')
       height.append(line[24:38])
       lat.append(line[39:50])
       lon.append(line[51:60])
       city.append(line[61:101]) #.strip())
       region.append(line[102:]) #.strip())
+
+      
+      print(f'{line[0:5]}: {len(line[0:5])}')
+      print(f'{line[6:14]}: {len(line[6:14])}')
+      print(f'{line[15:23]}: {len(line[15:23])}')
+      print(f'{line[24:38]}: {len(line[24:38])}')
+      print(f'{line[39:50]}: {len(line[39:50])}')
+      print(f'{line[51:60]}: {len(line[51:60])}')
+      print(f'{line[61:101]}: {len(line[61:101])}')
+      print(f'{line[102:]}: {len(line[102:])}')
+
+    
     # dictionary of lists 
     dict = {'wsid': wsid, 'date_from': date_from, 'date_to': date_to, 'height': height, # [m]
             'lat': lat, 'lon': lon, 'name': city, 'region': region} # [°]
