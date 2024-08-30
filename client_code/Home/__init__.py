@@ -91,7 +91,6 @@ class Home(HomeTemplate):
                  ))
     found_tuple = [t for t in zl if t[1] == Globals.weather_station and t[2] == Globals.region]
     wsid = found_tuple[0][0]
-    #Globals.wsid = wsid
     date_from = found_tuple[0][3]
     date_to = found_tuple[0][4]
     with Notification('Downloading observations, please wait...'):

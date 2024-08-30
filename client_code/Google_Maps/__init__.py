@@ -34,7 +34,7 @@ class Google_Maps(Google_MapsTemplate):
                                   Globals.weather_stations['lat'], 
                                   Globals.region)
       lon = get_values_by_condition(Globals.weather_stations['region'], 
-                                  Globals.weather_stations['lon'], 
+                                  Globals.weather_stations['lng'], 
                                   Globals.region)
       height = get_values_by_condition(Globals.weather_stations['region'], 
                                   Globals.weather_stations['height'], 
