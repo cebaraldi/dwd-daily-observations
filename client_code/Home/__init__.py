@@ -44,7 +44,7 @@ class Home(HomeTemplate):
     self.init_components(**properties)
 
     # debug
-    Globals.check_globals()
+    print(); Globals.check_globals()
     
     # Download weather stations and fill dropdown component for region selection
     if not Globals.weather_stations_loaded:
@@ -62,6 +62,7 @@ class Home(HomeTemplate):
     def get_values_by_condition(list_a, list_b, condition):
       return [b for a, b in zip(list_a, list_b) if a == condition]
     self.stations_dropdown.enabled = True
+    Globals.weather_station = '<Please select a station>'
     #print(f'selected region = {self.region_dropdown.selected_value}')
     Globals.region = self.region_dropdown.selected_value
     ws = get_values_by_condition(Globals.weather_stations['region'], 
@@ -69,19 +70,19 @@ class Home(HomeTemplate):
                                       Globals.region)
 
     # debug
-    Globals.check_globals()
+    print(); Globals.check_globals()
     
-    #ws.insert(0,'<Please select a station>')
-    print('fill stations_dropdown')
     self.stations_dropdown.placeholder = '<Please select a station>'
     self.stations_dropdown.items = ws
 
   def stations_dropdown_change(self, **event_args):
     Globals.weather_station = self.stations_dropdown.selected_value
-    print()
+    Globals.observations_loaded =  False
+
     # debug
+    print()
     Globals.check_globals()    
-    print(Globals.weather_stations.keys())
+
     # Zip into a list of tuploes
     zl = list(zip(Globals.weather_stations['wsid'], 
                   Globals.weather_stations['name'],
@@ -95,7 +96,7 @@ class Home(HomeTemplate):
     date_to = found_tuple[0][4]
     with Notification('Downloading observations, please wait...'):
       data = anvil.server.call('dl_zip', wsid, date_from, date_to)
-
+      Globals.observations_loaded =  True
     
     print(data.keys())
     obsdate = data['MESS_DATUM']
@@ -110,6 +111,8 @@ class Home(HomeTemplate):
     # Plotly: plotting with go.Figure()
     x = strings_to_dates(obsdate, date_format="%Y%m%d")
     y = replace_negative_999(strings_to_floats(tavg))
+    count = sum(1 for e in y if e is not None)
+    print(f'existing values = {count}')
    
     # Specify the layout
     layout = go.Layout(
@@ -126,3 +129,5 @@ class Home(HomeTemplate):
 
     # Display the plot in an Anvil Plot component (client side)
     self.plot_1.figure = fig    
+    # debug
+    Globals.check_globals()

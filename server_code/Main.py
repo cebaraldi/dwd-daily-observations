@@ -66,6 +66,7 @@ def dl_to_weather_stations(url):
     lng = []
     station = []
     region = []
+    abgabe = []
     for line in lines[2:]:
       
       wsid.append(line[0:5])
@@ -76,7 +77,7 @@ def dl_to_weather_stations(url):
       lng.append(line[51:60])
       station.append(line[61:101].strip()) #.strip())
       region.append(line[102:142].strip()) #.strip())
-
+      abgabe.append(line[143:].strip()) #.strip())
       
 #      print(f'{wsid}: {len(wsid)}')
 #      print(f'{date_from}: {len(date_from)}')
@@ -90,7 +91,7 @@ def dl_to_weather_stations(url):
     
     # dictionary of lists 
     dict = {'wsid': wsid, 'date_from': date_from, 'date_to': date_to, 'height': height, # [m]
-            'lat': lat, 'lng': lng, 'name': station, 'region': region} # [°]
+            'lat': lat, 'lng': lng, 'name': station, 'region': region, 'abgabe': abgabe}
     df = pd.DataFrame(dict) #.drop(index=[0,1])
     # Convert columns
     df['date_from'] = pd.to_datetime(df['date_from']).dt.date
@@ -98,11 +99,11 @@ def dl_to_weather_stations(url):
     df['height'] = pd.to_numeric(df['height'], downcast="integer")
     df['lat'] = pd.to_numeric(df['lat'], downcast="float")
     df['lng'] = pd.to_numeric(df['lng'], downcast="float")
+    # remove stations w/ missing latest observation
     df1 = df[df['date_to']==df['date_to'].max()]
-    no = df1['date_to']-df1['date_from']
-    print(no.max())
-    print(no.min())
-  return(df[df['date_to']==df['date_to'].max()].to_dict('list'))
+    # remove stations where abgabe is not 'Frei'
+    df2 = df1[df1['abgabe']=='Frei']
+  return(df2.to_dict('list'))
 
 @anvil.server.callable
 def dl_observations(wsid, date_from, date_to):
