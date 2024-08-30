@@ -78,14 +78,14 @@ def dl_to_weather_stations(url):
       region.append(line[102:142].strip()) #.strip())
 
       
-      print(f'{wsid}: {len(wsid)}')
-      print(f'{date_from}: {len(date_from)}')
-      print(f'{date_to}: {len(date_to)}')
-      print(f'{height}: {len(height)}')
-      print(f'{lat}: {len(lat)}')
-      print(f'{lng}: {len(lng)}')
-      print(f'{station}: {len(station)}')
-      print(f'{region}: {len(region)}')
+#      print(f'{wsid}: {len(wsid)}')
+#      print(f'{date_from}: {len(date_from)}')
+#      print(f'{date_to}: {len(date_to)}')
+#      print(f'{height}: {len(height)}')
+#      print(f'{lat}: {len(lat)}')
+#      print(f'{lng}: {len(lng)}')
+#      print(f'{station}: {len(station)}')
+#      print(f'{region}: {len(region)}')
 
     
     # dictionary of lists 
