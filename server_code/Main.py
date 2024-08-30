@@ -98,8 +98,11 @@ def dl_to_weather_stations(url):
     df['height'] = pd.to_numeric(df['height'], downcast="integer")
     df['lat'] = pd.to_numeric(df['lat'], downcast="float")
     df['lng'] = pd.to_numeric(df['lng'], downcast="float")
-    #print(df.head())
-  return(df.to_dict('list'))
+    df1 = df[df['date_to']==df['date_to'].max()]
+    no = df1['date_to']-df1['date_from']
+    print(no.max())
+    print(no.min())
+  return(df[df['date_to']==df['date_to'].max()].to_dict('list'))
 
 @anvil.server.callable
 def dl_observations(wsid, date_from, date_to):

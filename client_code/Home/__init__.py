@@ -61,7 +61,7 @@ class Home(HomeTemplate):
   def region_dropdown_change(self, **event_args):
     def get_values_by_condition(list_a, list_b, condition):
       return [b for a, b in zip(list_a, list_b) if a == condition]
-    self.weather_stations_dropdown.enabled = True
+    self.stations_dropdown.enabled = True
     #print(f'selected region = {self.region_dropdown.selected_value}')
     Globals.region = self.region_dropdown.selected_value
     ws = get_values_by_condition(Globals.weather_stations['region'], 
@@ -72,12 +72,12 @@ class Home(HomeTemplate):
     Globals.check_globals()
     
     #ws.insert(0,'<Please select a station>')
-    print('fill weather_stations_dropdown')
-    self.weather_stations_dropdown.placeholder = '<Please select a station>'
-    self.weather_stations_dropdown.items = ws
+    print('fill stations_dropdown')
+    self.stations_dropdown.placeholder = '<Please select a station>'
+    self.stations_dropdown.items = ws
 
-  def weather_stations_dropdown_change(self, **event_args):
-    Globals.weather_station = self.weather_stations_dropdown.selected_value
+  def stations_dropdown_change(self, **event_args):
+    Globals.weather_station = self.stations_dropdown.selected_value
     print()
     # debug
     Globals.check_globals()    
@@ -91,6 +91,7 @@ class Home(HomeTemplate):
                  ))
     found_tuple = [t for t in zl if t[1] == Globals.weather_station and t[2] == Globals.region]
     wsid = found_tuple[0][0]
+    #Globals.wsid = wsid
     date_from = found_tuple[0][3]
     date_to = found_tuple[0][4]
     data = anvil.server.call('dl_zip', wsid, date_from, date_to)
@@ -112,7 +113,7 @@ class Home(HomeTemplate):
    
     # Specify the layout
     layout = go.Layout(
-      title=go.layout.Title(text=f'{Globals.weather_station} / {Globals.region}', x=0.5),
+      title=go.layout.Title(text=f'{wsid} - {Globals.weather_station} / {Globals.region}', x=0.5),
       xaxis_title='Date',
       yaxis_title='Temperature [℃]'
       #xaxis_tickmode="array",
@@ -125,3 +126,6 @@ class Home(HomeTemplate):
 
     # Display the plot in an Anvil Plot component (client side)
     self.plot_1.figure = fig    
+
+
+

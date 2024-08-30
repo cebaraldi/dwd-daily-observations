@@ -24,6 +24,7 @@ observations_loaded = False
 # Dropdown selection status and selected values
 region = '<Please select a region>'
 weather_station = '<Please select a station>'
+wsid = ''
 
 def check_globals():
   print(f'\nregion = {region}')
