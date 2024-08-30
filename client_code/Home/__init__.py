@@ -94,8 +94,9 @@ class Home(HomeTemplate):
     #Globals.wsid = wsid
     date_from = found_tuple[0][3]
     date_to = found_tuple[0][4]
-    data = anvil.server.call('dl_zip', wsid, date_from, date_to)
-    Notification('observations downloaded').show()
+    with Notification('Downloading observations, please wait...'):
+      data = anvil.server.call('dl_zip', wsid, date_from, date_to)
+
     
     print(data.keys())
     obsdate = data['MESS_DATUM']
@@ -126,6 +127,3 @@ class Home(HomeTemplate):
 
     # Display the plot in an Anvil Plot component (client side)
     self.plot_1.figure = fig    
-
-
-
