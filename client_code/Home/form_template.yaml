@@ -3,11 +3,11 @@ components_by_slot:
   - components:
     - components:
       - layout_properties: {grid_position: 'JIMAMT,IGUYLY'}
-        name: check_box_1
+        name: cb_recent
         properties: {checked: true, text: Recent}
         type: CheckBox
       - layout_properties: {grid_position: 'JIMAMT,JNWUNH'}
-        name: check_box_2
+        name: rb_historical
         properties: {text: Historical}
         type: CheckBox
       layout_properties: {col_xs: 0, row: IJBWDL, width_xs: 6}
@@ -16,7 +16,7 @@ components_by_slot:
       type: ColumnPanel
     - components:
       - layout_properties: {grid_position: 'DBDHGN,VIEWTJ YLMNOB,JQDXEX'}
-        name: radio_button_1
+        name: rb_recent
         properties: {group_name: observables, selected: true, text: Air Temperature}
         type: RadioButton
       - layout_properties: {grid_position: 'DBDHGN,VIEWTJ EAXXXV,MCPXVU'}

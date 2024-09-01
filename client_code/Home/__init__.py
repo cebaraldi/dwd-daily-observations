@@ -84,11 +84,11 @@ class Home(HomeTemplate):
     Globals.check_globals()    
 
     # Zip into a list of tuploes
-    zl = list(zip(Globals.weather_stations['wsid'], 
-                  Globals.weather_stations['name'],
-                  Globals.weather_stations['region'],
-                  Globals.weather_stations['date_from'],
-                  Globals.weather_stations['date_to']
+    zl = list(zip(Globals.weather_stations['wsid'], #0
+                  Globals.weather_stations['name'], #1
+                  Globals.weather_stations['region'], #2
+                  Globals.weather_stations['date_from'], #3
+                  Globals.weather_stations['date_to'] #4
                  ))
     found_tuple = [t for t in zl if t[1] == Globals.weather_station and t[2] == Globals.region]
     wsid = found_tuple[0][0]
@@ -97,7 +97,8 @@ class Home(HomeTemplate):
     with Notification('Downloading observations, please wait...'):
       data = anvil.server.call('dl_zip', wsid, date_from, date_to)
       Globals.observations_loaded =  True
-    
+
+  
     #print(data.keys())
     obsdate = data['MESS_DATUM']
     #tmin = data['TNK']
