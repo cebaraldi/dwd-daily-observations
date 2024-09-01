@@ -94,9 +94,13 @@ class Home(HomeTemplate):
     wsid = found_tuple[0][0]
     date_from = found_tuple[0][3]
     date_to = found_tuple[0][4]
-    with Notification('Downloading observations, please wait...'):
+    with Notification(f'Downloading observations of {Globals.weather_station}, please wait...'):
       data = anvil.server.call('dl_zip', wsid, date_from, date_to)
       Globals.observations_loaded =  True
+
+    print(self.cb_recent)
+    print(self.cb_historical)
+    print(self.r)
 
   
     #print(data.keys())
