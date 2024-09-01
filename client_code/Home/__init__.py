@@ -98,10 +98,17 @@ class Home(HomeTemplate):
       data = anvil.server.call('dl_zip', wsid, date_from, date_to)
       Globals.observations_loaded =  True
 
-    print(self.cb_recent)
-    print(self.cb_historical)
-    print(self.r)
-
+    print(self.cb_recent.checked)
+    print(self.cb_historical.checked)
+    print()
+    print(self.rb_temperature.selected)
+    print(self.rb_precipitation.selected)
+    print(self.rb_cloudcover.selected)
+    print(self.rb_snowcover.selected)
+    print(self.rb_pressure.selected)
+    print(self.rb_humidity.selected)
+    print(self.rb_sunshine.selected)
+    print(self.rb_statistics.selected)
   
     #print(data.keys())
     obsdate = data['MESS_DATUM']
