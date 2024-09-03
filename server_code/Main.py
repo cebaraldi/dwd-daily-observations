@@ -113,11 +113,11 @@ def dl_observations(wsid, date_from, date_to):
   historical_path = path + 'historical/'
 
   recent_filename = f'tageswerte_KL_{wsid}_akt.zip'
-  historical_filename = f'tageswerte_KL_{wsid}_{date_from}_{date_to}_hist.zip'
+  #historical_filename = f'tageswerte_KL_{wsid}_{date_from}_{date_to}_hist.zip'
   
   # BINARY Data
   print(url + recent_path, recent_filename)
-  print(url + historical_path, historical_filename)
+  #print(url + historical_path, historical_filename)
 
   if not os.path.exists(recent_filename):
     urlretrieve(url, recent_filename)
