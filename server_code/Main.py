@@ -11,7 +11,7 @@ import pandas as pd
 
 from contextlib import closing
 import json
-
+#from bs4 import BeautifulSoup
 
 #@anvil.server.callable
 #def extract_year_from_date(date_value):
@@ -160,11 +160,11 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
   path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
 
   if recent:
-    full_path = path + 'recent/'
+    recent_path = path + 'recent/'
     filename = f"tageswerte_KL_{wsid}_akt.zip"
-    url = url + full_path + filename
+    url_recent = url + re+ filenamecent_path + filename
     body = {}
-    r = requests.get(url)
+    r = requests.get(url_recent)
     with closing(r), zipfile.ZipFile(io.BytesIO(r.content)) as archive:   
       # print({member.filename: archive.read(member) for member in archive.infolist()})
       body ={member.filename: archive.read(member) 
@@ -173,10 +173,20 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
             }
     rdf = dict_to_dataframe(body)
   if historical:  
-    full_path = path + 'historical/'
-    filename = f"tageswerte_KL_{wsid}_{date_from.strftime('%Y%m%d') }_{date_to.strftime('%Y%m%d') }_hist.zip"
-    url = url + full_path + filename
-    print(url)
+    historical_path = path + 'historical/'
+    #filename = f"tageswerte_KL_{wsid}_{date_from.strftime('%Y%m%d') }_{date_to.strftime('%Y%m%d') }_hist.zip"
+    #url_historical = url + historical_path + filename
+    url_historical = url + historical_path
+    print(url_historical)
+
+    print('###')
+    
+    pattern = f"tageswerte_KL_{wsid}_{date_from.strftime('%Y%m%d') }_*_hist.zip"
+    print(pattern)
+    #matching = fnmatch.filter(file_list, pattern)
+    #print(matching)
+
+    
     body = {}
     r = requests.get(url)
     with closing(r), zipfile.ZipFile(io.BytesIO(r.content)) as archive:   
@@ -191,3 +201,4 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
   df = rdf.drop('STATIONS_ID', axis=1) # already given as parameter
   dict_list = df.to_dict('list')
   return(dict_list)
+

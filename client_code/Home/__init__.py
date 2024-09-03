@@ -144,3 +144,17 @@ class Home(HomeTemplate):
     
     # debug
     Globals.check_globals()
+
+#  if current:
+#    urlcurry = list(set(row['urlcurry'] for row in rows))[0]
+#    cws = pd.read_csv(urlcurry, sep=";", header=0, encoding = "latin_1").dropna()
+#    if not historical:
+#      pws = cws[0:0]
+#  if historical:
+#    urlprevy = list(set(row['urlprevy'] for row in rows))[0]
+#    pws = pd.read_csv(urlprevy, sep=";", header=0, encoding = "latin_1").dropna()
+#    if not current:
+#      cws = pws[0:0]
+#  df = pd.concat([cws, pws])
+#  dict_list = df.to_dict('list')
+#  return(dict_list)
