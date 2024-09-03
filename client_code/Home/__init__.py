@@ -102,29 +102,45 @@ class Home(HomeTemplate):
                               )
       Globals.observations_loaded =  True
 
-
-    print(self.rb_temperature.selected)
-    print(self.rb_precipitation.selected)
-    print(self.rb_cloudcover.selected)
-    print(self.rb_snowcover.selected)
-    print(self.rb_pressure.selected)
-    print(self.rb_humidity.selected)
-    print(self.rb_sunshine.selected)
-    print(self.rb_statistics.selected)
-  
-    #print(data.keys())
     obsdate = data['MESS_DATUM']
+    print(len(obsdate))
+    
     #tmin = data['TNK']
-    tavg = data['TMK']
     #tmax = data['TXK']
-    #print(obsdate)
-    #print(tavg)
-    #print(f"Length of mininum temperatue observations is {len(tmin)}")
-    #print(f"Length of maxinum temperatue observations is {len(tmax)}")
+    if self.rb_temperature.selected:
+      yval = data['TMK']
+      ylabel = 'Temperature [℃]'
+    if self.rb_precipitation.selected:
+      yval = data['RSK']
+      ylabel = 'Precipitation [mm]'
+    if self.rb_cloudcover.selected:
+      yval = data['NM']
+      ylabel = 'Cloud Cover [1/8]'
+    if self.rb_snowcover.selected:
+      yval = data['SHK_TAG']
+      ylabel = 'Snow Cover [cm]'
+    if self.rb_ground_temperature.selected:
+      yval = data['TDK']
+      ylabel = 'Precipitation [℃]'
+    if self.rb_vapor_pressure.selected:
+      yval = data['VPM']
+      ylabel = 'Vapor Pressure [hPa]'
+    if self.rb_pressure.selected:
+      yval = data['PM']
+      ylabel = 'Air Pressure [hPa]'
+    if self.rb_humidity.selected:
+      yval = data['UPM']
+      ylabel = 'Realative Humidity [%]'
+    if self.rb_sunshine.selected:
+      yval = data['SDK']
+      ylabel = 'Sunshine Duration [h]'
+#    if self.rb_statistics.selected:
+#      yval = data['SDK']
+#      ylabel = 'Sunshine Duration [h]'
 
     # Plotly: plotting with go.Figure()
     x = strings_to_dates(obsdate, date_format="%Y%m%d")
-    y = replace_negative_999(strings_to_floats(tavg))
+    y = replace_negative_999(strings_to_floats(yval))
     count = sum(1 for e in y if e is not None)
     if count == 0:
       Notification('No observations available!',  style="warning").show()
@@ -133,7 +149,7 @@ class Home(HomeTemplate):
     layout = go.Layout(
       title=go.layout.Title(text=f'{wsid} - {Globals.weather_station} / {Globals.region}', x=0.5),
       xaxis_title='Date',
-      yaxis_title='Temperature [℃]'
+      yaxis_title=ylabel
     )
         
     # Make the scatter plot
@@ -144,17 +160,3 @@ class Home(HomeTemplate):
     
     # debug
     Globals.check_globals()
-
-#  if current:
-#    urlcurry = list(set(row['urlcurry'] for row in rows))[0]
-#    cws = pd.read_csv(urlcurry, sep=";", header=0, encoding = "latin_1").dropna()
-#    if not historical:
-#      pws = cws[0:0]
-#  if historical:
-#    urlprevy = list(set(row['urlprevy'] for row in rows))[0]
-#    pws = pd.read_csv(urlprevy, sep=";", header=0, encoding = "latin_1").dropna()
-#    if not current:
-#      cws = pws[0:0]
-#  df = pd.concat([cws, pws])
-#  dict_list = df.to_dict('list')
-#  return(dict_list)

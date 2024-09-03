@@ -213,26 +213,12 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
     print(hdf.shape)
     if not recent:
       rdf = hdf[0:0]
-    print('---')
   df = pd.concat([rdf, hdf])
-  print()  
-  df = rdf.drop('STATIONS_ID', axis=1) # already given as parameter
+  df = rdf.drop('STATIONS_ID', axis=1)
+  df = rdf.drop('QN_3', axis=1)
+  df = rdf.drop('QN_4', axis=1)
+  df = rdf.drop('RSKF', axis=1)
+  df.set_index('MESS_DATUM')
+  print(df.shape)
   dict_list = df.to_dict('list')
   return(dict_list)
-
-#@anvil.server.callable
-#def get_observations(ws, current=True, historical=False):
-#  rows = app_tables.meteoch_weatherstations.search(station=q.ilike(ws))
-#  if current:
-#    urlcurry = list(set(row['urlcurry'] for row in rows))[0]
-#    cws = pd.read_csv(urlcurry, sep=";", header=0, encoding = "latin_1").dropna()
-#    if not historical:
-#      pws = cws[0:0]
-#  if historical:
-#    urlprevy = list(set(row['urlprevy'] for row in rows))[0]
-#    pws = pd.read_csv(urlprevy, sep=";", header=0, encoding = "latin_1").dropna()
-#    if not current:
-#      cws = pws[0:0]
-# df = pd.concat([cws, pws])
-# dict_list = df.to_dict('list')
-#  return(dict_list)
