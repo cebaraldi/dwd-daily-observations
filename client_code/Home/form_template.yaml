@@ -31,6 +31,14 @@ components_by_slot:
         name: rb_snowcover
         properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Total Snow Cover}
         type: RadioButton
+      - layout_properties: {grid_position: 'DBDHGN,VIEWTJ MIOJWF,XHFCJF'}
+        name: rb_ground_temperature
+        properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Ground Temperature}
+        type: RadioButton
+      - layout_properties: {grid_position: 'DBDHGN,KAGKYO TZUFSV,WNKIVD'}
+        name: rb_vapor_pressure
+        properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Vapor Pressure}
+        type: RadioButton
       - layout_properties: {grid_position: 'DBDHGN,KAGKYO BYSVEW,BJAMFV'}
         name: rb_pressure
         properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Air Pressure}
@@ -43,7 +51,7 @@ components_by_slot:
         name: rb_sunshine
         properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Sunshine Duration}
         type: RadioButton
-      - layout_properties: {grid_position: 'DBDHGN,KAGKYO HRYKFZ,RMZPXL'}
+      - layout_properties: {grid_position: 'DBDHGN,KAGKYO RNXDEI,NYLZWN'}
         name: rb_statistics
         properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Summary Statistics}
         type: RadioButton
@@ -53,21 +61,21 @@ components_by_slot:
       type: ColumnPanel
     - layout_properties: {col_xs: 0, row: DXTVXD, width_xs: 3}
       name: region_label
-      properties: {text: Select a region, visible: true}
+      properties: {spacing_above: none, spacing_below: none, text: Select a region, visible: true}
       type: Label
     - layout_properties: {col_xs: 6, row: DXTVXD, width_xs: 6}
       name: ws_label
-      properties: {text: Select a station, visible: true}
+      properties: {spacing_above: none, spacing_below: none, text: Select a station, visible: true}
       type: Label
     - event_bindings: {change: region_dropdown_change}
       layout_properties: {col_xs: 0, row: WEWBDD, width_xs: 6}
       name: region_dropdown
-      properties: {include_placeholder: true, visible: true}
+      properties: {include_placeholder: true, spacing_above: none, spacing_below: none, visible: true}
       type: DropDown
     - event_bindings: {change: stations_dropdown_change}
       layout_properties: {col_xs: 6, row: WEWBDD, width_xs: 6}
       name: stations_dropdown
-      properties: {enabled: false, include_placeholder: true, visible: true}
+      properties: {enabled: false, include_placeholder: true, spacing_above: none, spacing_below: none, visible: true}
       type: DropDown
     - layout_properties: {col_xs: 0, row: XAAPWY, width_xs: 12}
       name: plot_1

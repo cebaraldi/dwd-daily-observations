@@ -152,21 +152,42 @@ def dict_to_dataframe(data_dict):
   return(df)  
   
 @anvil.server.callable
-def dl_zip(wsid, date_from, date_to):
+def dl_zip(wsid, date_from, date_to, recent, historical):
+  if not recent and not historical:
+    recent = True
+  
   url = "https://opendata.dwd.de/"
   path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
-  recent_path = path + 'recent/'
-  filename = f"tageswerte_KL_{wsid}_akt.zip"
-  url = url + recent_path + filename
-  body = {}
-  r = requests.get(url)
-  with closing(r), zipfile.ZipFile(io.BytesIO(r.content)) as archive:   
-    # print({member.filename: archive.read(member) for member in archive.infolist()})
-    body ={member.filename: archive.read(member) 
-           for member in archive.infolist() 
-           if (member.filename.startswith('produkt_klima_tag_'))
-          }
-  df = dict_to_dataframe(body)
-  df = df.drop('STATIONS_ID', axis=1) # already given as parameter
+
+  if recent:
+    full_path = path + 'recent/'
+    filename = f"tageswerte_KL_{wsid}_akt.zip"
+    url = url + full_path + filename
+    body = {}
+    r = requests.get(url)
+    with closing(r), zipfile.ZipFile(io.BytesIO(r.content)) as archive:   
+      # print({member.filename: archive.read(member) for member in archive.infolist()})
+      body ={member.filename: archive.read(member) 
+            for member in archive.infolist() 
+            if (member.filename.startswith('produkt_klima_tag_'))
+            }
+    rdf = dict_to_dataframe(body)
+  if historical:  
+    full_path = path + 'historical/'
+    filename = f"tageswerte_KL_{wsid}_{date_from.strftime('%Y%m%d') }_{date_to.strftime('%Y%m%d') }_hist.zip"
+    url = url + full_path + filename
+    print(url)
+    body = {}
+    r = requests.get(url)
+    with closing(r), zipfile.ZipFile(io.BytesIO(r.content)) as archive:   
+      # print({member.filename: archive.read(member) for member in archive.infolist()})
+      body ={member.filename: archive.read(member) 
+            for member in archive.infolist() 
+            if (member.filename.startswith('produkt_klima_tag_'))
+            }
+    hdf = dict_to_dataframe(body)
+    print(hdf.shape)
+    
+  df = rdf.drop('STATIONS_ID', axis=1) # already given as parameter
   dict_list = df.to_dict('list')
   return(dict_list)
