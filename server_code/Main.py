@@ -183,6 +183,8 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
             }
     rdf = dict_to_dataframe(body)
     print(rdf.shape)
+    if not historical:
+      hdf = rdf[0:0]
   if historical:  
     historical_path = path + 'historical/'
     #filename = f"tageswerte_KL_{wsid}_{date_from.strftime('%Y%m%d') }_{date_to.strftime('%Y%m%d') }_hist.zip"
@@ -209,9 +211,28 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
             }
     hdf = dict_to_dataframe(body)
     print(hdf.shape)
+    if not recent:
+      rdf = hdf[0:0]
     print('---')
-    
+  df = pd.concat([rdf, hdf])
+  print()  
   df = rdf.drop('STATIONS_ID', axis=1) # already given as parameter
   dict_list = df.to_dict('list')
   return(dict_list)
 
+#@anvil.server.callable
+#def get_observations(ws, current=True, historical=False):
+#  rows = app_tables.meteoch_weatherstations.search(station=q.ilike(ws))
+#  if current:
+#    urlcurry = list(set(row['urlcurry'] for row in rows))[0]
+#    cws = pd.read_csv(urlcurry, sep=";", header=0, encoding = "latin_1").dropna()
+#    if not historical:
+#      pws = cws[0:0]
+#  if historical:
+#    urlprevy = list(set(row['urlprevy'] for row in rows))[0]
+#    pws = pd.read_csv(urlprevy, sep=";", header=0, encoding = "latin_1").dropna()
+#    if not current:
+#      cws = pws[0:0]
+# df = pd.concat([cws, pws])
+# dict_list = df.to_dict('list')
+#  return(dict_list)
