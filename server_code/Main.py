@@ -11,8 +11,18 @@ import pandas as pd
 
 from contextlib import closing
 import json
-#from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 
+def get_url_paths(url, ext='', params={}):
+  response = requests.get(url, params=params)
+  if response.ok:
+    response_text = response.text
+  else:
+    return response.raise_for_status()
+  soup = BeautifulSoup(response_text, 'html.parser')
+  parent = [url + node.get('href') for node in soup.find_all('a') if node.get('href').endswith(ext)]
+  return parent
+  
 #@anvil.server.callable
 #def extract_year_from_date(date_value):
 #  year = date_value.year
@@ -172,21 +182,23 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
             if (member.filename.startswith('produkt_klima_tag_'))
             }
     rdf = dict_to_dataframe(body)
+    print(rdf.shape)
   if historical:  
     historical_path = path + 'historical/'
     #filename = f"tageswerte_KL_{wsid}_{date_from.strftime('%Y%m%d') }_{date_to.strftime('%Y%m%d') }_hist.zip"
     #url_historical = url + historical_path + filename
     url_historical = url + historical_path
-    print(url_historical)
+    #print(url_historical)
 
-    print('###')
-    
-    pattern = f"tageswerte_KL_{wsid}_{date_from.strftime('%Y%m%d') }_*_hist.zip"
-    print(pattern)
-    #matching = fnmatch.filter(file_list, pattern)
-    #print(matching)
-
-    
+    pattern = f"tageswerte_KL_{wsid}_{date_from.strftime('%Y%m%d') }_"
+    #print(pattern)
+    ext = 'zip'
+    file_list = get_url_paths(url_historical, ext)
+    #print(file_list)
+    found = [s for s in file_list if pattern in s]
+    if len(found) > 0:
+      url = found[0]
+      
     body = {}
     r = requests.get(url)
     with closing(r), zipfile.ZipFile(io.BytesIO(r.content)) as archive:   
@@ -197,6 +209,7 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
             }
     hdf = dict_to_dataframe(body)
     print(hdf.shape)
+    print('---')
     
   df = rdf.drop('STATIONS_ID', axis=1) # already given as parameter
   dict_list = df.to_dict('list')
