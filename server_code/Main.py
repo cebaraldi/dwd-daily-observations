@@ -110,7 +110,7 @@ def dl_observations(wsid, date_from, date_to):
   url = "https://opendata.dwd.de/"
   path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
   recent_path = path + 'recent/'
-  historical_path = path + 'historical/'
+  #historical_path = path + 'historical/'
 
   recent_filename = f'tageswerte_KL_{wsid}_akt.zip'
   #historical_filename = f'tageswerte_KL_{wsid}_{date_from}_{date_to}_hist.zip'
@@ -162,7 +162,7 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
   if recent:
     recent_path = path + 'recent/'
     filename = f"tageswerte_KL_{wsid}_akt.zip"
-    url_recent = url + re+ filenamecent_path + filename
+    url_recent = url + recent_path + filename
     body = {}
     r = requests.get(url_recent)
     with closing(r), zipfile.ZipFile(io.BytesIO(r.content)) as archive:   
