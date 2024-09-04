@@ -182,43 +182,41 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
             if (member.filename.startswith('produkt_klima_tag_'))
             }
     rdf = dict_to_dataframe(body)
-    print(rdf.shape)
     if not historical:
       hdf = rdf[0:0]
+
   if historical:  
     historical_path = path + 'historical/'
-    #filename = f"tageswerte_KL_{wsid}_{date_from.strftime('%Y%m%d') }_{date_to.strftime('%Y%m%d') }_hist.zip"
-    #url_historical = url + historical_path + filename
     url_historical = url + historical_path
-    #print(url_historical)
-
     pattern = f"tageswerte_KL_{wsid}_{date_from.strftime('%Y%m%d') }_"
-    #print(pattern)
     ext = 'zip'
     file_list = get_url_paths(url_historical, ext)
-    #print(file_list)
     found = [s for s in file_list if pattern in s]
     if len(found) > 0:
       url = found[0]
-      
     body = {}
     r = requests.get(url)
     with closing(r), zipfile.ZipFile(io.BytesIO(r.content)) as archive:   
-      # print({member.filename: archive.read(member) for member in archive.infolist()})
       body ={member.filename: archive.read(member) 
             for member in archive.infolist() 
             if (member.filename.startswith('produkt_klima_tag_'))
             }
     hdf = dict_to_dataframe(body)
-    print(hdf.shape)
     if not recent:
       rdf = hdf[0:0]
-  df = pd.concat([rdf, hdf])
-  df = rdf.drop('STATIONS_ID', axis=1)
-  df = rdf.drop('QN_3', axis=1)
-  df = rdf.drop('QN_4', axis=1)
-  df = rdf.drop('RSKF', axis=1)
-  df.set_index('MESS_DATUM')
-  print(df.shape)
-  dict_list = df.to_dict('list')
+  print(rdf.shape)
+  print(hdf.shape)
+  df = pd.concat([hdf, rdf])
+
+  df = df.drop('STATIONS_ID', axis=1)
+  df = df.drop('QN_3', axis=1)
+  df = df.drop('QN_4', axis=1)
+  df = df.drop('RSKF', axis=1)
+  dfs = df.sort_values(by=['MESS_DATUM'], ascending=True)
+  #df.set_index('MESS_DATUM')
+  print('********')
+  print(dfs.head)
+  print(dfs.shape)
+  
+  dict_list = dfs.to_dict('list')
   return(dict_list)
