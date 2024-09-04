@@ -4,7 +4,63 @@ import plotly.graph_objects as go
 import anvil.server
 from datetime import datetime
 from .. import Globals
-      
+
+def extract_observables(self):
+  # Zip into a list of tuples
+  zl = list(zip(Globals.weather_stations['wsid'], #0
+                Globals.weather_stations['name'], #1
+                Globals.weather_stations['region'], #2
+                Globals.weather_stations['date_from'], #3
+                Globals.weather_stations['date_to'] #4
+                ))
+  found_tuple = [t for t in zl if t[1] == Globals.weather_station and t[2] == Globals.region]
+  wsid = found_tuple[0][0]
+  date_from = found_tuple[0][3]
+  date_to = found_tuple[0][4]
+
+  if not Globals.observations_loaded :
+    with Notification(f'Downloading observations of {Globals.weather_station}, please wait...'):
+      data = anvil.server.call('dl_zip', wsid, date_from, date_to, 
+                              self.cb_recent.checked, 
+                              self.cb_historical.checked
+                              )
+      Globals.observations_loaded =  True
+  obsdate = data['MESS_DATUM']
+
+  # Do plot w/ multiple observables on the server side (plotly on client cannot )
+  #tmin = data['TNK']
+  #tmax = data['TXK']
+  if self.rb_temperature.selected:
+    yval = data['TMK']
+    ylabel = 'Temperature [℃]'
+  if self.rb_precipitation.selected:
+    yval = data['RSK']
+    ylabel = 'Precipitation [mm]'
+  if self.rb_snowcover.selected:
+    yval = data['SHK_TAG']
+    ylabel = 'Snow Cover [cm]'
+  if self.rb_ground_temperature.selected:
+    yval = data['TGK']
+    ylabel = 'Precipitation [℃]'
+  if self.rb_vapor_pressure.selected:
+    yval = data['VPM']
+    ylabel = 'Vapor Pressure [hPa]'
+  if self.rb_pressure.selected:
+    yval = data['PM']
+    ylabel = 'Air Pressure [hPa]'
+  if self.rb_humidity.selected:
+    yval = data['UPM']
+    ylabel = 'Realative Humidity [%]'
+  if self.rb_sunshine.selected:
+    yval = data['SDK']
+    ylabel = 'Sunshine Duration [h]'
+
+  if not self.cb_statistics.checked:
+    scatter_plot(self, wsid, ylabel, obsdate, yval)
+  else:
+    pass
+
+  
 def scatter_plot(self, wsid, ylabel, obsdate, yval):
       # Plotly: plotting with go.Figure()
       x = strings_to_dates(obsdate, date_format="%Y%m%d")
@@ -104,59 +160,7 @@ class Home(HomeTemplate):
     print()
     Globals.check_globals()    
 
-    # Zip into a list of tuploes
-    zl = list(zip(Globals.weather_stations['wsid'], #0
-                  Globals.weather_stations['name'], #1
-                  Globals.weather_stations['region'], #2
-                  Globals.weather_stations['date_from'], #3
-                  Globals.weather_stations['date_to'] #4
-                 ))
-    found_tuple = [t for t in zl if t[1] == Globals.weather_station and t[2] == Globals.region]
-    wsid = found_tuple[0][0]
-    date_from = found_tuple[0][3]
-    date_to = found_tuple[0][4]
-
-    if not Globals.observations_loaded :
-      with Notification(f'Downloading observations of {Globals.weather_station}, please wait...'):
-        data = anvil.server.call('dl_zip', wsid, date_from, date_to, 
-                                self.cb_recent.checked, 
-                                self.cb_historical.checked
-                                )
-        Globals.observations_loaded =  True
-    obsdate = data['MESS_DATUM']
-
-    # Do plot w/ multiple observables on the server side (plotly on client cannot )
-    #tmin = data['TNK']
-    #tmax = data['TXK']
-    if self.rb_temperature.selected:
-      yval = data['TMK']
-      ylabel = 'Temperature [℃]'
-    if self.rb_precipitation.selected:
-      yval = data['RSK']
-      ylabel = 'Precipitation [mm]'
-    if self.rb_snowcover.selected:
-      yval = data['SHK_TAG']
-      ylabel = 'Snow Cover [cm]'
-    if self.rb_ground_temperature.selected:
-      yval = data['TGK']
-      ylabel = 'Precipitation [℃]'
-    if self.rb_vapor_pressure.selected:
-      yval = data['VPM']
-      ylabel = 'Vapor Pressure [hPa]'
-    if self.rb_pressure.selected:
-      yval = data['PM']
-      ylabel = 'Air Pressure [hPa]'
-    if self.rb_humidity.selected:
-      yval = data['UPM']
-      ylabel = 'Realative Humidity [%]'
-    if self.rb_sunshine.selected:
-      yval = data['SDK']
-      ylabel = 'Sunshine Duration [h]'
-
-    if not self.cb_statistics.checked:
-      scatter_plot(self, wsid, ylabel, obsdate, yval)
-    else:
-      pass
+    extract_observables(self)
     
     # debug
     Globals.check_globals()
@@ -168,6 +172,7 @@ class Home(HomeTemplate):
   def rb_precipitation_clicked(self, **event_args):
     """This method is called when this radio button is selected"""
     print('rb_precipitation_clicked')
+    
 
   def rb_snowcover_clicked(self, **event_args):
     """This method is called when this radio button is selected"""
