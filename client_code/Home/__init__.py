@@ -95,16 +95,16 @@ class Home(HomeTemplate):
     date_from = found_tuple[0][3]
     date_to = found_tuple[0][4]
 
-    with Notification(f'Downloading observations of {Globals.weather_station}, please wait...'):
-      data = anvil.server.call('dl_zip', wsid, date_from, date_to, 
-                               self.cb_recent.checked, 
-                               self.cb_historical.checked
-                              )
-      Globals.observations_loaded =  True
-
+    if not Globals.observations_loaded :
+      with Notification(f'Downloading observations of {Globals.weather_station}, please wait...'):
+        data = anvil.server.call('dl_zip', wsid, date_from, date_to, 
+                                self.cb_recent.checked, 
+                                self.cb_historical.checked
+                                )
+        Globals.observations_loaded =  True
     obsdate = data['MESS_DATUM']
-    print(len(obsdate))
-    
+
+    # Do plot w/ multiple observables on the server side (plotly on client cannot )
     #tmin = data['TNK']
     #tmax = data['TXK']
     if self.rb_temperature.selected:
@@ -113,9 +113,6 @@ class Home(HomeTemplate):
     if self.rb_precipitation.selected:
       yval = data['RSK']
       ylabel = 'Precipitation [mm]'
-    if self.rb_cloudcover.selected:
-      yval = data['NM']
-      ylabel = 'Cloud Cover [1/8]'
     if self.rb_snowcover.selected:
       yval = data['SHK_TAG']
       ylabel = 'Snow Cover [cm]'
@@ -134,29 +131,71 @@ class Home(HomeTemplate):
     if self.rb_sunshine.selected:
       yval = data['SDK']
       ylabel = 'Sunshine Duration [h]'
-#    if self.rb_statistics.selected:
-#      yval = data['SDK']
-#      ylabel = 'Sunshine Duration [h]'
 
-    # Plotly: plotting with go.Figure()
-    x = strings_to_dates(obsdate, date_format="%Y%m%d")
-    y = replace_negative_999(strings_to_floats(yval))
-    count = sum(1 for e in y if e is not None)
-    if count == 0:
-      Notification('No observations available!',  style="warning").show()
-   
-    # Specify the layout
-    layout = go.Layout(
-      title=go.layout.Title(text=f'{wsid} - {Globals.weather_station} / {Globals.region}', x=0.5),
-      xaxis_title='Date',
-      yaxis_title=ylabel
-    )
-        
-    # Make the scatter plot
-    fig = go.Figure(data=go.Scatter(x=x, y=y), layout=layout)
-
-    # Display the plot in an Anvil Plot component (client side)
-    self.plot_1.figure = fig    
+    if not self.cb_statistics.checked:
+      # Plotly: plotting with go.Figure()
+      x = strings_to_dates(obsdate, date_format="%Y%m%d")
+      y = replace_negative_999(strings_to_floats(yval))
+      count = sum(1 for e in y if e is not None)
+      if count == 0:
+        Notification('No observations available!',  style="warning").show()
+    
+      # Specify the layout
+      layout = go.Layout(
+        title=go.layout.Title(text=f'{wsid} - {Globals.weather_station} / {Globals.region}', x=0.5),
+        xaxis_title='Date',
+        yaxis_title=ylabel
+      )
+          
+      # Make the scatter plot
+      fig = go.Figure(data=go.Scatter(x=x, y=y), layout=layout)
+  
+      # Display the plot in an Anvil Plot component (client side)
+      self.plot_1.figure = fig    
     
     # debug
     Globals.check_globals()
+
+  def rb_temperature_clicked(self, **event_args):
+    """This method is called when this radio button is selected"""
+    pass
+
+  def rb_precipitation_clicked(self, **event_args):
+    """This method is called when this radio button is selected"""
+    pass
+
+  def rb_snowcover_clicked(self, **event_args):
+    """This method is called when this radio button is selected"""
+    pass
+
+  def rb_ground_temperature_clicked(self, **event_args):
+    """This method is called when this radio button is selected"""
+    pass
+
+  def rb_vapor_pressure_clicked(self, **event_args):
+    """This method is called when this radio button is selected"""
+    pass
+
+  def rb_pressure_clicked(self, **event_args):
+    """This method is called when this radio button is selected"""
+    pass
+
+  def rb_humidity_clicked(self, **event_args):
+    """This method is called when this radio button is selected"""
+    pass
+
+  def rb_sunshine_clicked(self, **event_args):
+    """This method is called when this radio button is selected"""
+    pass
+
+  def cb_recent_change(self, **event_args):
+    """This method is called when this checkbox is checked or unchecked"""
+    pass
+
+  def cb_historical_change(self, **event_args):
+    """This method is called when this checkbox is checked or unchecked"""
+    pass
+
+  def cb_statistics_change(self, **event_args):
+    """This method is called when this checkbox is checked or unchecked"""
+    pass

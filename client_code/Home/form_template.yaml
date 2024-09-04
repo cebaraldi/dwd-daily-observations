@@ -2,58 +2,65 @@ components_by_slot:
   slot_1:
   - components:
     - components:
-      - layout_properties: {grid_position: 'JIMAMT,IGUYLY'}
+      - event_bindings: {change: cb_recent_change}
+        layout_properties: {grid_position: 'JIMAMT,IGUYLY'}
         name: cb_recent
         properties: {checked: true, spacing_above: none, spacing_below: none, text: Recent}
         type: CheckBox
-      - layout_properties: {grid_position: 'JIMAMT,JNWUNH'}
+      - event_bindings: {change: cb_historical_change}
+        layout_properties: {grid_position: 'JIMAMT,JNWUNH'}
         name: cb_historical
         properties: {spacing_above: none, spacing_below: none, text: Historical}
         type: CheckBox
-      layout_properties: {col_xs: 0, row: IJBWDL, width_xs: 6}
+      - event_bindings: {change: cb_statistics_change}
+        layout_properties: {grid_position: 'JIMAMT,YEVBBI'}
+        name: cb_statistics
+        properties: {text: Summary Statistics}
+        type: CheckBox
+      layout_properties: {col_xs: 0, row: IJBWDL, width_xs: 8}
       name: outlined_card_1
       properties: {role: outlined-card}
       type: ColumnPanel
     - components:
-      - layout_properties: {grid_position: 'DBDHGN,VIEWTJ YLMNOB,JQDXEX'}
+      - event_bindings: {clicked: rb_temperature_clicked}
+        layout_properties: {grid_position: 'DBDHGN,VIEWTJ YLMNOB,JQDXEX'}
         name: rb_temperature
         properties: {group_name: observables, selected: true, spacing_above: none, spacing_below: none, text: Air Temperature}
         type: RadioButton
-      - layout_properties: {grid_position: 'DBDHGN,VIEWTJ EAXXXV,MCPXVU'}
+      - event_bindings: {clicked: rb_precipitation_clicked}
+        layout_properties: {grid_position: 'DBDHGN,VIEWTJ EAXXXV,MCPXVU'}
         name: rb_precipitation
         properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Precipitation}
         type: RadioButton
-      - layout_properties: {grid_position: 'DBDHGN,VIEWTJ NTQNHM,IOFWSK'}
-        name: rb_cloudcover
-        properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Cloud Cover}
-        type: RadioButton
-      - layout_properties: {grid_position: 'DBDHGN,VIEWTJ AVCSXQ,LGYODO'}
+      - event_bindings: {clicked: rb_snowcover_clicked}
+        layout_properties: {grid_position: 'DBDHGN,VIEWTJ AVCSXQ,LGYODO'}
         name: rb_snowcover
         properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Total Snow Cover}
         type: RadioButton
-      - layout_properties: {grid_position: 'DBDHGN,VIEWTJ MIOJWF,XHFCJF'}
+      - event_bindings: {clicked: rb_ground_temperature_clicked}
+        layout_properties: {grid_position: 'DBDHGN,VIEWTJ MIOJWF,XHFCJF'}
         name: rb_ground_temperature
         properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Ground Temperature}
         type: RadioButton
-      - layout_properties: {grid_position: 'DBDHGN,KAGKYO TZUFSV,WNKIVD'}
+      - event_bindings: {clicked: rb_vapor_pressure_clicked}
+        layout_properties: {grid_position: 'DBDHGN,KAGKYO TZUFSV,WNKIVD'}
         name: rb_vapor_pressure
         properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Vapor Pressure}
         type: RadioButton
-      - layout_properties: {grid_position: 'DBDHGN,KAGKYO BYSVEW,BJAMFV'}
+      - event_bindings: {clicked: rb_pressure_clicked}
+        layout_properties: {grid_position: 'DBDHGN,KAGKYO BYSVEW,BJAMFV'}
         name: rb_pressure
         properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Air Pressure}
         type: RadioButton
-      - layout_properties: {grid_position: 'DBDHGN,KAGKYO YNYQMK,UBDBZG'}
+      - event_bindings: {clicked: rb_humidity_clicked}
+        layout_properties: {grid_position: 'DBDHGN,KAGKYO YNYQMK,UBDBZG'}
         name: rb_humidity
         properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Relative Air Humidity}
         type: RadioButton
-      - layout_properties: {grid_position: 'DBDHGN,KAGKYO PAUFRA,XGLDIB'}
+      - event_bindings: {clicked: rb_sunshine_clicked}
+        layout_properties: {grid_position: 'DBDHGN,KAGKYO PAUFRA,XGLDIB'}
         name: rb_sunshine
         properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Sunshine Duration}
-        type: RadioButton
-      - layout_properties: {grid_position: 'DBDHGN,KAGKYO RNXDEI,NYLZWN'}
-        name: rb_statistics
-        properties: {group_name: observables, spacing_above: none, spacing_below: none, text: Summary Statistics}
         type: RadioButton
       layout_properties: {col_xs: 0, row: UOHPHF, width_xs: 12}
       name: outlined_card_2
