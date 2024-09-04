@@ -4,6 +4,27 @@ import plotly.graph_objects as go
 import anvil.server
 from datetime import datetime
 from .. import Globals
+      
+def scatter_plot(self, wsid, ylabel, obsdate, yval):
+      # Plotly: plotting with go.Figure()
+      x = strings_to_dates(obsdate, date_format="%Y%m%d")
+      y = replace_negative_999(strings_to_floats(yval))
+      count = sum(1 for e in y if e is not None)
+      if count == 0:
+        Notification('No observations available!',  style="warning").show()
+    
+      # Specify the layout
+      layout = go.Layout(
+        title=go.layout.Title(text=f'{wsid} - {Globals.weather_station} / {Globals.region}', x=0.5),
+        xaxis_title='Date',
+        yaxis_title=ylabel
+      )
+          
+      # Make the scatter plot
+      fig = go.Figure(data=go.Scatter(x=x, y=y), layout=layout)
+  
+      # Display the plot in an Anvil Plot component (client side)
+      self.plot_1.figure = fig  
 
 def strings_to_dates(string_list, date_format="%Y-%m-%d"):  # Adjust date format as needed
   date_list = []
@@ -117,7 +138,7 @@ class Home(HomeTemplate):
       yval = data['SHK_TAG']
       ylabel = 'Snow Cover [cm]'
     if self.rb_ground_temperature.selected:
-      yval = data['TDK']
+      yval = data['TGK']
       ylabel = 'Precipitation [℃]'
     if self.rb_vapor_pressure.selected:
       yval = data['VPM']
@@ -133,69 +154,53 @@ class Home(HomeTemplate):
       ylabel = 'Sunshine Duration [h]'
 
     if not self.cb_statistics.checked:
-      # Plotly: plotting with go.Figure()
-      x = strings_to_dates(obsdate, date_format="%Y%m%d")
-      y = replace_negative_999(strings_to_floats(yval))
-      count = sum(1 for e in y if e is not None)
-      if count == 0:
-        Notification('No observations available!',  style="warning").show()
-    
-      # Specify the layout
-      layout = go.Layout(
-        title=go.layout.Title(text=f'{wsid} - {Globals.weather_station} / {Globals.region}', x=0.5),
-        xaxis_title='Date',
-        yaxis_title=ylabel
-      )
-          
-      # Make the scatter plot
-      fig = go.Figure(data=go.Scatter(x=x, y=y), layout=layout)
-  
-      # Display the plot in an Anvil Plot component (client side)
-      self.plot_1.figure = fig    
+      scatter_plot(self, wsid, ylabel, obsdate, yval)
+    else:
+      pass
     
     # debug
     Globals.check_globals()
 
   def rb_temperature_clicked(self, **event_args):
     """This method is called when this radio button is selected"""
-    pass
+    print('rb_temperature_clicked')
 
   def rb_precipitation_clicked(self, **event_args):
     """This method is called when this radio button is selected"""
-    pass
+    print('rb_precipitation_clicked')
 
   def rb_snowcover_clicked(self, **event_args):
     """This method is called when this radio button is selected"""
-    pass
+    print('rb_snowcover_clicked')
 
   def rb_ground_temperature_clicked(self, **event_args):
     """This method is called when this radio button is selected"""
-    pass
+    print('rb_ground_temperature_clicked')
 
   def rb_vapor_pressure_clicked(self, **event_args):
     """This method is called when this radio button is selected"""
-    pass
+    print('rb_vapor_pressure_clicked')
 
   def rb_pressure_clicked(self, **event_args):
     """This method is called when this radio button is selected"""
-    pass
+    print('rb_pressure_clicked')
 
   def rb_humidity_clicked(self, **event_args):
     """This method is called when this radio button is selected"""
-    pass
+    print('rb_humidity_clicked')
 
   def rb_sunshine_clicked(self, **event_args):
     """This method is called when this radio button is selected"""
-    pass
+    print('rb_sunshine_clicked')
 
   def cb_recent_change(self, **event_args):
     """This method is called when this checkbox is checked or unchecked"""
-    pass
+    print('cb_recent_change')
 
   def cb_historical_change(self, **event_args):
     """This method is called when this checkbox is checked or unchecked"""
-    pass
+    print('cb_historical_change')
 
   def cb_statistics_change(self, **event_args):
     """This method is called when this checkbox is checked or unchecked"""
-    pass
+    print('cb_statistics_change')

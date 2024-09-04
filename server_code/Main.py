@@ -23,47 +23,8 @@ def get_url_paths(url, ext='', params={}):
   parent = [url + node.get('href') for node in soup.find_all('a') if node.get('href').endswith(ext)]
   return parent
   
-#@anvil.server.callable
-#def extract_year_from_date(date_value):
-#  year = date_value.year
-#  return year
-  
-#@anvil.server.callable
-#def get_records_for_year(table_name, date_column_name, year):
-#  """
-#  Retrieves records from a table where the specified date column's year matches the given year.
-#
-#  Args:
-#    table_name (str): The name of the table.
-#    date_column_name (str): The name of the date column.
-#    year (int): The target year.
-#
-#  Returns:
-#    list: A list of records matching the criteria.
-#  """
-#  table = app_tables[table_name]
-#  records = table.search(**{date_column_name: q.date_extract('year') == year})
-#  return records
-  
-#@anvil.server.callable
-#def get_region():
-#  rows =  app_tables.dwd_weatherstations.search()
-#  unique_values = set(row['region'] for row in rows)
-#  sorted_values = sorted(list(unique_values))
-#  sorted_values.insert(0,"<Please select a region>")
-#  return sorted_values  
-
-#@anvil.server.callable
-#def get_ws(region):
-#  rows = app_tables.dwd_weatherstations.search(region=q.ilike(region))
-#  unique_values = set(row['name'] for row in rows)
-#  sorted_values = sorted(list(unique_values))
-#  sorted_values.insert(0,"<Please select a station>")
-#  return sorted_values
-
 @anvil.server.callable
 def dl_to_weather_stations(url):
-  print(url)
   response = requests.get(url)
   if response.status_code == 200:
     lines = response.text.splitlines()
@@ -89,16 +50,6 @@ def dl_to_weather_stations(url):
       region.append(line[102:142].strip()) #.strip())
       abgabe.append(line[143:].strip()) #.strip())
       
-#      print(f'{wsid}: {len(wsid)}')
-#      print(f'{date_from}: {len(date_from)}')
-#      print(f'{date_to}: {len(date_to)}')
-#      print(f'{height}: {len(height)}')
-#      print(f'{lat}: {len(lat)}')
-#      print(f'{lng}: {len(lng)}')
-#      print(f'{station}: {len(station)}')
-#      print(f'{region}: {len(region)}')
-
-    
     # dictionary of lists 
     dict = {'wsid': wsid, 'date_from': date_from, 'date_to': date_to, 'height': height, # [m]
             'lat': lat, 'lng': lng, 'name': station, 'region': region, 'abgabe': abgabe}
@@ -126,18 +77,13 @@ def dl_observations(wsid, date_from, date_to):
   #historical_filename = f'tageswerte_KL_{wsid}_{date_from}_{date_to}_hist.zip'
   
   # BINARY Data
-  print(url + recent_path, recent_filename)
-  #print(url + historical_path, historical_filename)
-
   if not os.path.exists(recent_filename):
     urlretrieve(url, recent_filename)
-    
     try:
       with zipfile.ZipFile(recent_filename, mode="r") as archive:
         for file in archive.namelist():
           if file.endswith("/tmp/produkt_klima_tag_*.txt"):
             archive.extract(file, ".")
-            print(file)
     except FileNotFoundError:
       return False
 
@@ -204,19 +150,11 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
     hdf = dict_to_dataframe(body)
     if not recent:
       rdf = hdf[0:0]
-  print(rdf.shape)
-  print(hdf.shape)
   df = pd.concat([hdf, rdf])
-
   df = df.drop('STATIONS_ID', axis=1)
   df = df.drop('QN_3', axis=1)
   df = df.drop('QN_4', axis=1)
   df = df.drop('RSKF', axis=1)
   dfs = df.sort_values(by=['MESS_DATUM'], ascending=True)
-  #df.set_index('MESS_DATUM')
-  print('********')
-  print(dfs.head)
-  print(dfs.shape)
-  
   dict_list = dfs.to_dict('list')
   return(dict_list)
