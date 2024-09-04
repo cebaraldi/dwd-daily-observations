@@ -20,39 +20,39 @@ def extract_observables(self):
 
   if not Globals.observations_loaded :
     with Notification(f'Downloading observations of {Globals.weather_station}, please wait...'):
-      data = anvil.server.call('dl_zip', wsid, date_from, date_to, 
+      Globals.observations = anvil.server.call('dl_zip', wsid, date_from, date_to, 
                               self.cb_recent.checked, 
                               self.cb_historical.checked
                               )
       Globals.observations_loaded =  True
-  obsdate = data['MESS_DATUM']
+  obsdate = Globals.observations['MESS_DATUM']
 
   # Do plot w/ multiple observables on the server side (plotly on client cannot )
-  #tmin = data['TNK']
-  #tmax = data['TXK']
+  #tmin = Globals.observations['TNK']
+  #tmax = Globals.observations['TXK']
   if self.rb_temperature.selected:
-    yval = data['TMK']
+    yval = Globals.observations['TMK']
     ylabel = 'Temperature [℃]'
   if self.rb_precipitation.selected:
-    yval = data['RSK']
+    yval = Globals.observations['RSK']
     ylabel = 'Precipitation [mm]'
   if self.rb_snowcover.selected:
-    yval = data['SHK_TAG']
+    yval = Globals.observations['SHK_TAG']
     ylabel = 'Snow Cover [cm]'
   if self.rb_ground_temperature.selected:
-    yval = data['TGK']
+    yval = Globals.observations['TGK']
     ylabel = 'Precipitation [℃]'
   if self.rb_vapor_pressure.selected:
-    yval = data['VPM']
+    yval = Globals.observations['VPM']
     ylabel = 'Vapor Pressure [hPa]'
   if self.rb_pressure.selected:
-    yval = data['PM']
+    yval = Globals.observations['PM']
     ylabel = 'Air Pressure [hPa]'
   if self.rb_humidity.selected:
-    yval = data['UPM']
+    yval = Globals.observations['UPM']
     ylabel = 'Realative Humidity [%]'
   if self.rb_sunshine.selected:
-    yval = data['SDK']
+    yval = Globals.observations['SDK']
     ylabel = 'Sunshine Duration [h]'
 
   if not self.cb_statistics.checked:
@@ -168,35 +168,28 @@ class Home(HomeTemplate):
   def rb_temperature_clicked(self, **event_args):
     """This method is called when this radio button is selected"""
     print('rb_temperature_clicked')
+    extract_observables(self)
 
   def rb_precipitation_clicked(self, **event_args):
-    """This method is called when this radio button is selected"""
-    print('rb_precipitation_clicked')
-    
+    extract_observables(self)
 
   def rb_snowcover_clicked(self, **event_args):
-    """This method is called when this radio button is selected"""
-    print('rb_snowcover_clicked')
+    extract_observables(self)
 
   def rb_ground_temperature_clicked(self, **event_args):
-    """This method is called when this radio button is selected"""
-    print('rb_ground_temperature_clicked')
+    extract_observables(self)
 
   def rb_vapor_pressure_clicked(self, **event_args):
-    """This method is called when this radio button is selected"""
-    print('rb_vapor_pressure_clicked')
+    extract_observables(self)
 
   def rb_pressure_clicked(self, **event_args):
-    """This method is called when this radio button is selected"""
-    print('rb_pressure_clicked')
+    extract_observables(self)
 
   def rb_humidity_clicked(self, **event_args):
-    """This method is called when this radio button is selected"""
-    print('rb_humidity_clicked')
+    extract_observables(self)
 
   def rb_sunshine_clicked(self, **event_args):
-    """This method is called when this radio button is selected"""
-    print('rb_sunshine_clicked')
+    extract_observables(self)
 
   def cb_recent_change(self, **event_args):
     """This method is called when this checkbox is checked or unchecked"""
