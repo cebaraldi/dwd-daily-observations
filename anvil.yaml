@@ -2,7 +2,7 @@ allow_embedding: false
 correct_dependency_ids: {}
 db_schema: {}
 dependencies: []
-name: DWD Observations
+name: DWD Daily Observations
 native_deps: null
 package_name: DWD_Observations___Dev
 renamed: true
