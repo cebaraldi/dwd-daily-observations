@@ -58,6 +58,7 @@ def dl_to_weather_stations(url):
     dict = {'wsid': wsid, 'date_from': date_from, 'date_to': date_to, 'height': height, # [m]
             'lat': lat, 'lng': lng, 'name': station, 'region': region, 'abgabe': abgabe}
     df = pd.DataFrame(dict) #.drop(index=[0,1])
+    print(df.shape)
     # Convert columns
     df['date_from'] = pd.to_datetime(df['date_from']).dt.date
     df['date_to'] = pd.to_datetime(df['date_to']).dt.date
@@ -66,8 +67,10 @@ def dl_to_weather_stations(url):
     df['lng'] = pd.to_numeric(df['lng'], downcast="float")
     # remove stations w/ missing latest observation
     df1 = df[df['date_to']==df['date_to'].max()]
+    print(df1.shape)
     # remove stations where abgabe is not 'Frei'
     df2 = df1[df1['abgabe']=='Frei']
+    print(df2.shape)
   return(df2.to_dict('list'))
 
 @anvil.server.callable
