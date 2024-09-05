@@ -5,16 +5,20 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 
-
 class Contact(ContactTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    # Any code you write here will run before the form opens.
-
   def bt_submit_click(self, **event_args):
-    name = 'mujo'
-    email = 'mujoa@home.com'
-    feedback = 'hello'
+    name = self.tb_name.text
+    email = self.tb_email.text
+    feedback = self.ta_feeback.text
     anvil.server.call('send_feedback',name, email, feedback)
+    self.bt_submit.enabled = False
+    self.tb_name.text = ''
+    self.tb_email.text = ''
+    self.ta_feeback.text = ''
+
+  def bt_ok_click(self, **event_args):
+    self.bt_submit.enabled = True

@@ -43,7 +43,6 @@ def dl_to_weather_stations(url):
     region = []
     abgabe = []
     for line in lines[2:]:
-      
       wsid.append(line[0:5])
       date_from.append(line[6:14])
       date_to.append(line[15:23])
@@ -52,13 +51,11 @@ def dl_to_weather_stations(url):
       lng.append(line[51:60])
       station.append(line[61:101].strip()) #.strip())
       region.append(line[102:142].strip()) #.strip())
-      abgabe.append(line[143:].strip()) #.strip())
-      
+      abgabe.append(line[143:].strip()) #.strip())      
     # dictionary of lists 
     dict = {'wsid': wsid, 'date_from': date_from, 'date_to': date_to, 'height': height, # [m]
             'lat': lat, 'lng': lng, 'name': station, 'region': region, 'abgabe': abgabe}
     df = pd.DataFrame(dict) #.drop(index=[0,1])
-    print(df.shape)
     # Convert columns
     df['date_from'] = pd.to_datetime(df['date_from']).dt.date
     df['date_to'] = pd.to_datetime(df['date_to']).dt.date
@@ -67,32 +64,30 @@ def dl_to_weather_stations(url):
     df['lng'] = pd.to_numeric(df['lng'], downcast="float")
     # remove stations w/ missing latest observation
     df1 = df[df['date_to']==df['date_to'].max()]
-    print(df1.shape)
-    # remove stations where abgabe is not 'Frei'
-    #df2 = df1[df1['abgabe']=='Frei']
-    #print(df2.shape)
-  return(df1.to_dict('list'))
+    # remove stations where abgabe is not 'Frei', i.e. not a DWD weather station
+    df2 = df1[df1['abgabe']=='Frei']
+  return(df2.to_dict('list'))
 
-@anvil.server.callable
-def dl_observations(wsid, date_from, date_to):
-  url = "https://opendata.dwd.de/"
-  path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
-  recent_path = path + 'recent/'
-  #historical_path = path + 'historical/'
-
-  recent_filename = f'tageswerte_KL_{wsid}_akt.zip'
-  #historical_filename = f'tageswerte_KL_{wsid}_{date_from}_{date_to}_hist.zip'
-  
-  # BINARY Data
-  if not os.path.exists(recent_filename):
-    urlretrieve(url, recent_filename)
-    try:
-      with zipfile.ZipFile(recent_filename, mode="r") as archive:
-        for file in archive.namelist():
-          if file.endswith("/tmp/produkt_klima_tag_*.txt"):
-            archive.extract(file, ".")
-    except FileNotFoundError:
-      return False
+#@anvil.server.callable
+#def dl_observations(wsid, date_from, date_to):
+#  url = "https://opendata.dwd.de/"
+#  path = 'climate_environment/CDC/observations_germany/climate/daily/kl/'
+#  recent_path = path + 'recent/'
+#  #historical_path = path + 'historical/'
+#
+#  recent_filename = f'tageswerte_KL_{wsid}_akt.zip'
+#  #historical_filename = f'tageswerte_KL_{wsid}_{date_from}_{date_to}_hist.zip'
+#  
+#  # BINARY Data
+#  if not os.path.exists(recent_filename):
+#    urlretrieve(url, recent_filename)
+#    try:
+#      with zipfile.ZipFile(recent_filename, mode="r") as archive:
+#        for file in archive.namelist():
+#          if file.endswith("/tmp/produkt_klima_tag_*.txt"):
+#            archive.extract(file, ".")
+#    except FileNotFoundError:
+#      return False
 
 def dict_to_dataframe(data_dict):
   """Converts a dictionary with a binary string value into a Pandas DataFrame.
@@ -166,6 +161,7 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
   dict_list = dfs.to_dict('list')
   return(dict_list)
 
+@anvil.server.callable
 def send_feedback(name, email, feedback):
   # Send yourself an email each time feedback is submitted
   anvil.email.send(to="cebaraldi@gmail.com", 

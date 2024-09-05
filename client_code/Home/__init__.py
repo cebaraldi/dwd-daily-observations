@@ -131,7 +131,6 @@ class Home(HomeTemplate):
       Globals.weather_stations = anvil.server.call('dl_to_weather_stations', url) # Main
       Globals.weather_stations_loaded = True
     Globals.regions = sorted(list(set(Globals.weather_stations['region'])))
-    print(Globals.regions)
     self.region_dropdown.items = Globals.regions  
     self.region_dropdown.placeholder = '<Please select a region>'
 
