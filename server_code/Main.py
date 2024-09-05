@@ -69,9 +69,9 @@ def dl_to_weather_stations(url):
     df1 = df[df['date_to']==df['date_to'].max()]
     print(df1.shape)
     # remove stations where abgabe is not 'Frei'
-    df2 = df1[df1['abgabe']=='Frei']
-    print(df2.shape)
-  return(df2.to_dict('list'))
+    #df2 = df1[df1['abgabe']=='Frei']
+    #print(df2.shape)
+  return(df1.to_dict('list'))
 
 @anvil.server.callable
 def dl_observations(wsid, date_from, date_to):
