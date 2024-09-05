@@ -5,7 +5,6 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 
-
 class About(AboutTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
