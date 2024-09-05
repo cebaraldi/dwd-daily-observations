@@ -26,7 +26,7 @@ components_by_slot:
       properties: {text: 'Question / comment:'}
       type: Label
     - layout_properties: {col_xs: 0, row: LUOBIW, width_xs: 12}
-      name: text_box_1
+      name: tb_feedback
       properties: {placeholder: <Questions or comments>}
       type: TextBox
     - layout_properties: {col_xs: 6, row: FOTKFP, width_xs: 3}
