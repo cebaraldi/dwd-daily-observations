@@ -12,3 +12,9 @@ class Contact(ContactTemplate):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+
+  def bt_submit_click(self, **event_args):
+    name = 'mujo'
+    email = 'mujoa@home.com'
+    feedback = 'hello'
+    anvil.server.call('send_feedback',name, email, feedback)

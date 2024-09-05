@@ -165,3 +165,17 @@ def dl_zip(wsid, date_from, date_to, recent, historical):
   dfs = df.sort_values(by=['MESS_DATUM'], ascending=True)
   dict_list = dfs.to_dict('list')
   return(dict_list)
+
+def send_feedback(name, email, feedback):
+  # Send yourself an email each time feedback is submitted
+  anvil.email.send(to="cebaraldi@gmail.com", 
+                   subject=f"Feedback from {name}",
+                   text=f"""
+                   
+  A new person has filled out the feedback form!
+
+  Name: {name}
+  Email address: {email}
+  Feedback:
+  {feedback}
+  """)

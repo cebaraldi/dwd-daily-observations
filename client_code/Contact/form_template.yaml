@@ -29,7 +29,8 @@ components_by_slot:
       name: tb_feedback
       properties: {placeholder: <Questions or comments>}
       type: TextBox
-    - layout_properties: {col_xs: 6, row: FOTKFP, width_xs: 3}
+    - event_bindings: {click: bt_submit_click}
+      layout_properties: {col_xs: 6, row: FOTKFP, width_xs: 3}
       name: bt_submit
       properties: {role: outlined-button, text: Submit}
       type: Button
