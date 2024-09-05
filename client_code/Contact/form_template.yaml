@@ -1,8 +1,41 @@
 components_by_slot:
   slot_1:
-  - layout_properties: {}
-    name: label_1
-    properties: {text: Contact}
-    type: Label
+  - components:
+    - layout_properties: {col_xs: 0, row: PUPSPK, width_xs: 12}
+      name: label_1
+      properties: {role: headline, text: Your opinion and suggestions are welcome!}
+      type: Label
+    - layout_properties: {col_xs: 0, row: BSYLKE, width_xs: 3}
+      name: label_2
+      properties: {text: 'Name:'}
+      type: Label
+    - layout_properties: {col_xs: 0, row: LYSVIK, width_xs: 8}
+      name: tb_name
+      properties: {placeholder: <Please enter your name>}
+      type: TextBox
+    - layout_properties: {col_xs: 0, row: PBGXPD, width_xs: 3}
+      name: label_3
+      properties: {text: 'Email address:'}
+      type: Label
+    - layout_properties: {col_xs: 0, row: NNOHHP, width_xs: 8}
+      name: tb_email
+      properties: {placeholder: <Your email address>}
+      type: TextBox
+    - layout_properties: {col_xs: 0, row: OVMTXP, width_xs: 3}
+      name: label_4
+      properties: {text: 'Question / comment:'}
+      type: Label
+    - layout_properties: {col_xs: 0, row: LUOBIW, width_xs: 12}
+      name: text_box_1
+      properties: {placeholder: <Questions or comments>}
+      type: TextBox
+    - layout_properties: {col_xs: 6, row: FOTKFP, width_xs: 3}
+      name: bt_submit
+      properties: {role: outlined-button, text: Submit}
+      type: Button
+    layout_properties: {}
+    name: grid_panel_1
+    properties: {}
+    type: GridPanel
 is_package: true
 layout: {type: 'form:ceb_Layout'}
