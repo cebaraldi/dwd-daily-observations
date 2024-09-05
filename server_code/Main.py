@@ -175,3 +175,16 @@ def send_feedback(name, email, feedback):
   Feedback:
   {feedback}
   """)
+  # log feedback to database
+  app_tables.feedback.add_row(name=name, email=email, feedback=feedback, date=datetime.now())
+
+
+#from anvil.server import callable
+#@callable
+#def validate_email_input(email):
+#    if validate_email(email):
+#        # Email is valid
+#        return True
+#    else:
+#        # Email is invalid
+#        return False

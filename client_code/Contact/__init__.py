@@ -14,11 +14,13 @@ class Contact(ContactTemplate):
     name = self.tb_name.text
     email = self.tb_email.text
     feedback = self.ta_feeback.text
-    anvil.server.call('send_feedback',name, email, feedback)
+    #if anvil.server.call('validate_email', email):
+    anvil.server.call('send_feedback', name, email, feedback)
     self.bt_submit.enabled = False
     self.tb_name.text = ''
-    self.tb_email.text = ''
     self.ta_feeback.text = ''
+    self.tb_email.text = ''
 
   def bt_ok_click(self, **event_args):
     self.bt_submit.enabled = True
+

@@ -5,6 +5,10 @@ components_by_slot:
       name: label_1
       properties: {role: headline, text: About this project}
       type: Label
+    - layout_properties: {col_xs: 6, row: ZSUTJM, width_xs: 3}
+      name: label_2
+      properties: {}
+      type: Label
     layout_properties: {}
     name: grid_panel_1
     properties: {}
@@ -14,8 +18,12 @@ components_by_slot:
     properties: {height: 32}
     type: Spacer
   - layout_properties: {}
-    name: text_area_1
-    properties: {height: 138, text: 'In this project, we utilize publicly accessible climate data from the German ''DWD Climate Data Center (CDC)'' to explore fundamental data analysis techniques. Our goal is to gain practical experience in tasks such as: downloading text and binary data from websites, organizing it into tabular formats, visualizing data through plots, and calculating relevant statistical metrics. We aim to gather feedback from potential users to enhance the project''s usability and address this in future improved releases.'}
-    type: TextArea
+    name: label_3
+    properties: {foreground: '', role: null, text: 'In this project, we utilize publicly accessible climate data from the German ''DWD Climate Data Center (CDC)'' to explore fundamental data analysis techniques. Our goal is to gain practical experience in tasks such as: downloading text and binary data from websites, organizing it into tabular formats, visualizing data through plots, and calculating relevant statistical metrics. We aim to gather feedback from potential users to enhance the project''s usability and address this in future improved releases.'}
+    type: Label
+  - layout_properties: {}
+    name: label_4
+    properties: {align: left, bold: false, text: 'The data and further information can be found at: opendata.dwd.de'}
+    type: Label
 is_package: true
 layout: {type: 'form:ceb_Layout'}

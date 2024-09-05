@@ -9,7 +9,8 @@ components_by_slot:
       name: label_2
       properties: {spacing_above: none, spacing_below: none, text: 'Name:'}
       type: Label
-    - layout_properties: {col_xs: 0, row: LYSVIK, width_xs: 8}
+    - event_bindings: {}
+      layout_properties: {col_xs: 0, row: LYSVIK, width_xs: 8}
       name: tb_name
       properties: {placeholder: <Please enter your name>}
       type: TextBox
